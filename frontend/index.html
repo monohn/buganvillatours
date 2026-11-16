@@ -52,21 +52,21 @@
       <div class="nav-right-actions">
         
         <div class="currency-pill" id="currencyPill" onclick="toggleCurrencyDropdown(event)" title="Cambiar Moneda de Pago">
-          <span id="curFlag">🇵🇪</span>
+          <span id="curFlag" style="font-weight: 800; font-size: 0.82rem; color: var(--primary);">S/.</span>
           <span id="curLabel">Soles (S/.)</span>
           <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
 
           <div class="currency-dropdown" id="currencyDropdown">
             <button type="button" class="currency-dropdown-opt active" data-cur="PEN" onclick="setCurrency('PEN', event)">
-              <span>🇵🇪 Soles Peruanos</span>
+              <span>Soles Peruanos</span>
               <strong>S/.</strong>
             </button>
             <button type="button" class="currency-dropdown-opt" data-cur="USD" onclick="setCurrency('USD', event)">
-              <span>🇺🇸 Dólares (USD)</span>
+              <span>Dólares (USD)</span>
               <strong>$</strong>
             </button>
             <button type="button" class="currency-dropdown-opt" data-cur="EUR" onclick="setCurrency('EUR', event)">
-              <span>🇪🇺 Euros (EUR)</span>
+              <span>Euros (EUR)</span>
               <strong>€</strong>
             </button>
           </div>
@@ -92,10 +92,6 @@
               <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
               Mi Panel Cliente
             </a>
-            <a href="#admin-dashboard" id="userMenuAdminLink" style="display: none;" onclick="navigate('admin-dashboard')">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
-              Panel Administrador
-            </a>
             <button onclick="logout()">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M10.09 15.59L11.5 17l5-5-5-5-1.41 1.41L12.67 11H3v2h9.67l-2.58 2.59zM19 3H5c-1.11 0-2 .9-2 2v4h2V5h14v14H5v-4H3v4c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg>
               Cerrar Sesión
@@ -104,7 +100,9 @@
         </div>
 
         <!-- Mobile Trigger -->
-        <button class="mobile-nav-toggle" onclick="toggleMobileNav()">☰</button>
+        <button class="mobile-nav-toggle" onclick="toggleMobileNav()" aria-label="Menú">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+        </button>
       </div>
 
     </div>
@@ -199,7 +197,7 @@
             <!-- Misión Oficial -->
             <div class="mision-card">
               <div class="inst-icon-wrap">
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L1 21h22L12 2zm0 3.99L19.53 19H4.47L12 5.99zM11 16h2v2h-2zm0-6h2v4h-2z"/></svg>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-5.5-2.5l7.51-3.49L17.5 6.5 9.99 9.99 6.5 17.5zm5.5-6.6c.61 0 1.1.49 1.1 1.1s-.49 1.1-1.1 1.1-1.1-.49-1.1-1.1.49-1.1 1.1-1.1z"/></svg>
               </div>
               <h3 class="inst-title">Nuestra Misión</h3>
               <p class="inst-text">
@@ -554,7 +552,7 @@
                 Agencia de Viajes y Tour Operador con más de dos décadas de trayectoria en la región Ica. Comprometidos con la excelencia, la seguridad turística y el desarrollo sustentable de nuestro patrimonio.
               </p>
               <div style="margin-top: 14px; font-size: 0.82rem; color: #E2C275;">
-                ★ Autorizado por DIRCETUR Ica & MINCETUR
+                Autorizado por DIRCETUR Ica & MINCETUR
               </div>
             </div>
 
@@ -575,7 +573,6 @@
                 <li><a href="#home" onclick="scrollToSection('institucional')">Misión & Visión</a></li>
                 <li><a href="#home" onclick="scrollToSection('paquetes')">Paquetes en Soles</a></li>
                 <li><a href="#login" onclick="navigate('login')">Portal de Clientes</a></li>
-                <li><a href="#login" onclick="navigate('login')">Acceso Administrador</a></li>
                 <li><a href="#home" onclick="scrollToSection('faq')">Preguntas Frecuentes</a></li>
               </ul>
             </div>
@@ -628,9 +625,6 @@
             <div class="form-group">
               <label class="form-label">Correo Electrónico</label>
               <input type="email" class="form-input" id="loginEmail" placeholder="tu@correo.com" required>
-              <small style="color: var(--text-dim); font-size: 0.75rem; display: block; margin-top: 4px;">
-                💡 <em>Tip: Incluye 'admin' en tu correo para ingresar como Administrador.</em>
-              </small>
             </div>
 
             <div class="form-group">
@@ -1293,7 +1287,7 @@
 
               <div>
                 <span class="yape-phone-chip">
-                  📱 Yapear al: 956 789 012
+                  Yapear al: 956 789 012
                 </span>
                 <p style="font-size: 0.9rem; color: var(--yape-purple); font-weight: 700; margin-bottom: 6px;">
                   Titular: Buganvilla Tours E.I.R.L.
@@ -1360,7 +1354,7 @@
             <div id="payBoxPlin" style="display: none; padding: 24px; border: 1px solid var(--border-light); border-radius: var(--radius-md); margin-bottom: 24px; text-align: center; background: #F0FDF4;">
               <div style="font-size: 1.15rem; font-weight: 700; color: #059669; margin-bottom: 6px;">Transferencia Directa por Plin</div>
               <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 12px;">Transfiere al número corporativo registrado:</p>
-              <div style="font-size: 1.3rem; font-weight: 800; color: #059669; margin-bottom: 4px;">📱 956 623 396</div>
+              <div style="font-size: 1.3rem; font-weight: 800; color: #059669; margin-bottom: 4px;">956 623 396</div>
               <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">Titular: Buganvilla Tours E.I.R.L.</div>
               <div style="max-width: 320px; margin: 0 auto 16px auto; text-align: left;">
                 <label class="form-label" style="color: #059669;">Número de Operación Plin</label>
@@ -1373,7 +1367,7 @@
 
             <!-- Box 5: PAYPAL -->
             <div id="payBoxPaypal" style="display: none; padding: 24px; border: 1px solid var(--border-light); border-radius: var(--radius-md); margin-bottom: 24px; text-align: center; background: #F0F9FF;">
-              <div style="font-size: 1.15rem; font-weight: 700; color: #0079C1; margin-bottom: 6px;">🅿️ Pasarela Internacional PayPal</div>
+              <div style="font-size: 1.15rem; font-weight: 700; color: #0079C1; margin-bottom: 6px;">Pasarela Internacional PayPal</div>
               <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 12px;">Recomendado para turistas extranjeros con cuentas en USD o EUR.</p>
               <div style="max-width: 360px; margin: 0 auto 16px auto; text-align: left;">
                 <label class="form-label" style="color: #0079C1;">Correo Electrónico de tu cuenta PayPal</label>
@@ -1470,7 +1464,9 @@
   <!-- Modal OTP de Verificación de Correo (Seguridad) -->
   <div class="modal-overlay" id="otpModal">
     <div class="modal-card">
-      <div style="font-size: 2.2rem; margin-bottom: 8px;">📧</div>
+      <div style="width: 52px; height: 52px; border-radius: 50%; background: var(--primary-soft); color: var(--primary); display: inline-flex; align-items: center; justify-content: center; margin: 0 auto 12px auto;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+      </div>
       <h3 style="color: var(--primary); margin-bottom: 6px;">Código de Verificación</h3>
       <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5;">
         Por seguridad, ingresa el código de 6 dígitos que enviamos a:<br>

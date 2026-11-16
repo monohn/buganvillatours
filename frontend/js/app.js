@@ -22,9 +22,9 @@ const COMPANY = {
    MULTI-CURRENCY ENGINE (SOLES S/., DÓLARES $, EUROS €)
    ========================================================================== */
 const CURRENCIES = {
-  PEN: { code: 'PEN', symbol: 'S/.', name: 'Soles (S/.)', flag: '🇵🇪', rate: 1.0 },
-  USD: { code: 'USD', symbol: '$', name: 'Dólares ($)', flag: '🇺🇸', rate: 0.2667 },
-  EUR: { code: 'EUR', symbol: '€', name: 'Euros (€)', flag: '🇪🇺', rate: 0.2469 }
+  PEN: { code: 'PEN', symbol: 'S/.', name: 'Soles (S/.)', flag: 'S/.', rate: 1.0 },
+  USD: { code: 'USD', symbol: '$', name: 'Dólares ($)', flag: '$', rate: 0.2667 },
+  EUR: { code: 'EUR', symbol: '€', name: 'Euros (€)', flag: '€', rate: 0.2469 }
 };
 
 let currentCurrency = localStorage.getItem('buganvilla_currency') || 'PEN';
@@ -520,7 +520,7 @@ function renderHomePackages(category = 'all') {
         </div>
         <div class="pkg-body">
           <div class="pkg-meta-row">
-            <span>⏱ ${pkg.duration}</span>
+            <span>${pkg.duration}</span>
             <span>•</span>
             <span style="color: var(--accent-teal); font-weight: 600;">Salidas Diarias</span>
           </div>

@@ -30,9 +30,9 @@ const CONFIG = {
 
   // Supported Currencies
   CURRENCIES: {
-    PEN: { code: 'PEN', symbol: 'S/.', name: 'Soles Peruanos', flag: '🇵🇪', rate: 1.0 },
-    USD: { code: 'USD', symbol: '$', name: 'Dólares (USD)', flag: '🇺🇸', rate: 0.2667 },
-    EUR: { code: 'EUR', symbol: '€', name: 'Euros (EUR)', flag: '🇪🇺', rate: 0.2469 }
+    PEN: { code: 'PEN', symbol: 'S/.', name: 'Soles Peruanos', flag: 'S/.', rate: 1.0 },
+    USD: { code: 'USD', symbol: '$', name: 'Dólares (USD)', flag: '$', rate: 0.2667 },
+    EUR: { code: 'EUR', symbol: '€', name: 'Euros (EUR)', flag: '€', rate: 0.2469 }
   },
 
   DEFAULT_CURRENCY: 'PEN',

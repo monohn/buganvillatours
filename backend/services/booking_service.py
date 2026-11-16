@@ -125,16 +125,16 @@ class BookingService:
             sym = CurrencyService.get_symbol(booking.currency)
             amt = booking.total_currency if booking.total_currency else booking.total_amount
             msg = (
-                f"¡Hola Buganvilla Tours! 🌴🇵🇪\n"
+                f"Hola Buganvilla Tours,\n"
                 f"He realizado una reserva directa en su página web:\n\n"
-                f"📌 *Código de Reserva:* {booking.reference_code}\n"
-                f"🏜️ *Tour:* {pkg_name}\n"
-                f"📅 *Fecha:* {b_date}\n"
-                f"👥 *Pasajeros:* {booking.travelers} persona(s)\n"
-                f"👤 *Titular:* {booking.titular_name} (Doc: {booking.titular_doc})\n"
-                f"💰 *Total:* {sym} {amt:.2f} {booking.currency}\n"
-                f"⚡ *Estado:* {booking.status.upper()}\n\n"
-                f"Por favor confirmar los detalles del servicio y horario de recojo. ¡Muchas gracias!"
+                f"*Código de Reserva:* {booking.reference_code}\n"
+                f"*Tour:* {pkg_name}\n"
+                f"*Fecha:* {b_date}\n"
+                f"*Pasajeros:* {booking.travelers} persona(s)\n"
+                f"*Titular:* {booking.titular_name} (Doc: {booking.titular_doc})\n"
+                f"*Total:* {sym} {amt:.2f} {booking.currency}\n"
+                f"*Estado:* {booking.status.upper()}\n\n"
+                f"Por favor confirmar los detalles del servicio y horario de recojo. Muchas gracias."
             )
 
         encoded_msg = urllib.parse.quote(msg)

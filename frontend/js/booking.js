@@ -428,15 +428,15 @@ const BookingWizard = {
       if (voucher.company?.whatsapp_url) {
         vWhatsBtn.href = voucher.company.whatsapp_url;
       } else {
-        const msg = `¡Hola Buganvilla Tours! 🌴🇵🇪\n` +
+        const msg = `¡Hola Buganvilla Tours!\n` +
                     `Acabo de confirmar mi reserva directa en su página web:\n` +
-                    `📌 *Código de Reserva:* ${ref}\n` +
-                    `🏜️ *Tour:* ${tourName}\n` +
-                    `📅 *Fecha:* ${tourDate}\n` +
-                    `👥 *Pasajeros:* ${pax}\n` +
-                    `💰 *Monto:* ${total}\n` +
-                    `💳 *Método:* ${method}\n\n` +
-                    `Por favor confirmarme los detalles de recojo. ¡Muchas gracias!`;
+                    `*Código de Reserva:* ${ref}\n` +
+                    `*Tour:* ${tourName}\n` +
+                    `*Fecha:* ${tourDate}\n` +
+                    `*Pasajeros:* ${pax}\n` +
+                    `*Monto:* ${total}\n` +
+                    `*Método de Pago:* ${method}\n\n` +
+                    `Por favor confirmarme los detalles de recojo. Muchas gracias.`;
         vWhatsBtn.href = buildWhatsAppLink(msg);
       }
       vWhatsBtn.target = '_blank';
