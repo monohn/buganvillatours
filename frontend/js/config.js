@@ -42,32 +42,32 @@ const CONFIG = {
   DESTINATION_IMAGES: {
     huacachina: {
       title: 'Oasis de Huacachina & Dunas de Ica',
-      url: 'https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?w=1080&q=80',
+      url: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4c/Oasis_de_Huacachina%2C_Ica%2C_Per%C3%BA%2C_2015-07-29%2C_DD_23.JPG/960px-Oasis_de_Huacachina%2C_Ica%2C_Per%C3%BA%2C_2015-07-29%2C_DD_23.JPG',
       description: 'El único oasis natural de América rodeado de imponentes dunas doradas.'
     },
     paracas: {
       title: 'Islas Ballestas y Reserva Nacional de Paracas',
-      url: 'https://images.unsplash.com/photo-1589308078059-be1415eab4c3?w=1080&q=80',
+      url: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3d/Islas_Ballestas_2.JPG/960px-Islas_Ballestas_2.JPG',
       description: 'Santuario de lobos marinos, pingüinos de Humboldt y el enigmático Candelabro.'
     },
     nasca: {
       title: 'Sobrevuelo a las Líneas de Nasca',
-      url: 'https://images.unsplash.com/photo-1526392060635-9d6019884377?w=1080&q=80',
+      url: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d1/Nazca_Lines_Hummingbird_%28cropped%29.jpg/960px-Nazca_Lines_Hummingbird_%28cropped%29.jpg',
       description: 'Geoglifos milenarios de la cultura Nasca observados desde avionetas Cessna.'
     },
     pisco_wine: {
       title: 'Ruta del Pisco & Bodegas Tradicionales de Ica',
-      url: 'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=1080&q=80',
+      url: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/d/db/Bodega_El_Catador_%287521862384%29.jpg/960px-Bodega_El_Catador_%287521862384%29.jpg',
       description: 'Degustación y cata de piscos puros y quebrantas en haciendas coloniales centenarias.'
     },
     cachiche: {
       title: 'Pueblo de Cachiche & Palmera de las 7 Cabezas',
-      url: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=1080&q=80',
+      url: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/3/33/PALMERA_DE_SIETE_CABEZAS.jpg/960px-PALMERA_DE_SIETE_CABEZAS.jpg',
       description: 'Tierra mística de brujas benévolas y leyendas ancestrales iqueñas.'
     },
     canyon: {
       title: 'Cañón de los Perdidos - Desierto de Ocucaje',
-      url: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1080&q=80',
+      url: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6b/Ca%C3%B1%C3%B3n_de_los_Perdidos.jpg/960px-Ca%C3%B1%C3%B3n_de_los_Perdidos.jpg',
       description: 'Maravilla geológica de 600 metros de profundidad con fósiles marinos milenarios.'
     }
   }

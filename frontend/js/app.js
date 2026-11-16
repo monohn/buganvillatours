@@ -93,7 +93,7 @@ const DEFAULT_PACKAGES = [
     description: "Adrenalina pura en carros tubulares por las dunas gigantes y práctica de sandboarding guiado al atardecer en el oasis.",
     price: 85,
     duration: "Medio Día",
-    image: "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=800&q=80",
+    image: "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9d/Dune_Buggy_at_Huacachina_%287136152157%29.jpg/960px-Dune_Buggy_at_Huacachina_%287136152157%29.jpg",
     highlights: ["Tubulares con chofer certificado DIRCETUR", "Tablas profesionales para sandboarding", "Parada panorámica para fotos del sunset"]
   },
   {
@@ -103,7 +103,7 @@ const DEFAULT_PACKAGES = [
     description: "Excursión marina en deslizador a las islas para ver lobos de mar, pingüinos y el geoglifo El Candelabro, más playas rojas.",
     price: 135,
     duration: "Full Day",
-    image: "https://images.unsplash.com/photo-1580619305218-8423a7ef79b4?w=800&q=80",
+    image: "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3d/Islas_Ballestas_2.JPG/960px-Islas_Ballestas_2.JPG",
     highlights: ["Deslizador moderno con chalecos salvavidas", "Avistamiento de lobos marinos y aves guaneras", "Recorrido por la Reserva de Paracas"]
   },
   {
@@ -113,7 +113,7 @@ const DEFAULT_PACKAGES = [
     description: "Vista aérea de los misteriosos geoglifos milenarios (El Colibrí, El Mono, El Astronauta) en avionetas Cessna con ventana individual.",
     price: 390,
     duration: "Full Day",
-    image: "https://images.unsplash.com/photo-1526392060635-9d6019884377?w=800&q=80",
+    image: "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d1/Nazca_Lines_Hummingbird_%28cropped%29.jpg/960px-Nazca_Lines_Hummingbird_%28cropped%29.jpg",
     highlights: ["Avionetas Cessna con ventana individual", "Pilotos bilingües con amplia experiencia", "Certificado oficial de sobrevuelo"]
   },
   {
@@ -123,7 +123,7 @@ const DEFAULT_PACKAGES = [
     description: "Campamento de lujo bajo el cielo estrellado del desierto iqueño con domo privado, fogata y cena parrillera gourmet.",
     price: 580,
     duration: "2 Días / 1 Noche",
-    image: "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=800&q=80",
+    image: "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3d/View_from_Honeymoon_Desert_Tent_..._%2850950160223%29.jpg/960px-View_from_Honeymoon_Desert_Tent_..._%2850950160223%29.jpg",
     highlights: ["Domo de lujo con cama confortable y luz", "Cena parrillera con maridaje de vino iqueño", "Desayuno buffet al amanecer en las dunas"]
   },
   {
@@ -133,7 +133,7 @@ const DEFAULT_PACKAGES = [
     description: "Recorrido vitivinícola tradicional en Ica con cata guiada de piscos de uvas quebranta, italia y visita a falcas de cobre.",
     price: 110,
     duration: "1 Día",
-    image: "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?w=800&q=80",
+    image: "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/db/Bodega_El_Catador_%287521862384%29.jpg/960px-Bodega_El_Catador_%287521862384%29.jpg",
     highlights: ["Degustación guiada de piscos y vinos premiados", "Historia de la destilación tradicional en Ica", "Almuerzo típico campestre criollo"]
   },
   {
@@ -143,7 +143,7 @@ const DEFAULT_PACKAGES = [
     description: "Aventura todoterreno hacia el cañón milenario en el desierto de Ocucaje. Paisajes paleontológicos y fósiles únicos.",
     price: 190,
     duration: "Full Day",
-    image: "https://images.unsplash.com/photo-1682687220742-aba13b6e50ba?w=800&q=80",
+    image: "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6b/Ca%C3%B1%C3%B3n_de_los_Perdidos.jpg/960px-Ca%C3%B1%C3%B3n_de_los_Perdidos.jpg",
     highlights: ["Camionetas 4x4 acondicionadas para desierto", "Trekking moderado por el fondo del cañón", "Guía paleontológico certificado"]
   },
   {
@@ -153,7 +153,7 @@ const DEFAULT_PACKAGES = [
     description: "Recorrido de leyendas por el místico pueblo de las brujas, la Palmera de las Siete Cabezas y el Santuario del Señor de Luren.",
     price: 75,
     duration: "Medio Día",
-    image: "https://images.unsplash.com/photo-1518457607834-6e8d80c183c5?w=800&q=80",
+    image: "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/73/ESTATUA_DE_LA_BRUJA_DE_CACHICHE.jpg/960px-ESTATUA_DE_LA_BRUJA_DE_CACHICHE.jpg",
     highlights: ["Monumento a la Bruja Julia Hernández Pecho", "Visita al enigmático tronco de 7 cabezas", "Guía conocedor del folklore iqueño"]
   },
   {
@@ -163,7 +163,7 @@ const DEFAULT_PACKAGES = [
     description: "El tour más solicitado: Islas Ballestas por la mañana en Paracas y tubulares con sandboarding al atardecer en Huacachina.",
     price: 195,
     duration: "Full Day",
-    image: "https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?w=800&q=80",
+    image: "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/62/Playa_Roja_-_Paracas_National_Reserve%2C_Ica.jpg/960px-Playa_Roja_-_Paracas_National_Reserve%2C_Ica.jpg",
     highlights: ["Traslados privados Paracas - Ica incluidos", "Todas las tasas turísticas y chalecos cubiertos", "Sunset asegurado en las dunas doradas"]
   }
 ];
@@ -515,7 +515,7 @@ function renderHomePackages(category = 'all') {
     return `
       <div class="pkg-card">
         <div class="pkg-img-wrap">
-          <img src="${pkg.image}" alt="${pkg.name}" class="pkg-img" loading="lazy">
+          <img src="${pkg.image}" alt="${pkg.name}" class="pkg-img" loading="lazy" referrerpolicy="no-referrer">
           <div class="pkg-badge-float">${pkg.category.toUpperCase()}</div>
         </div>
         <div class="pkg-body">

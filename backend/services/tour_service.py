@@ -11,7 +11,7 @@ INITIAL_PACKAGES = [
         "duration": "Medio Día (2.5 hrs)",
         "price": 85.0,
         "description": "Adrenalina pura en carros tubulares por las dunas gigantes y práctica de sandboarding guiado al atardecer en el oasis de América.",
-        "image_url": "https://images.unsplash.com/photo-1544644181-1484b3fdfc62?w=800&q=80",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9d/Dune_Buggy_at_Huacachina_%287136152157%29.jpg/960px-Dune_Buggy_at_Huacachina_%287136152157%29.jpg",
         "highlights": [
             "Tubulares con chofer certificado DIRCETUR",
             "Tablas profesionales para sandboarding (de pie o acostado)",
@@ -34,7 +34,7 @@ INITIAL_PACKAGES = [
         "duration": "Full Day (8 hrs)",
         "price": 135.0,
         "description": "Excursión marina en deslizador a las islas para ver lobos de mar, pingüinos de Humboldt y el enigmático Candelabro, más playas vírgenes.",
-        "image_url": "https://images.unsplash.com/photo-1580619305218-8423a7ef79b4?w=800&q=80",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3d/Islas_Ballestas_2.JPG/960px-Islas_Ballestas_2.JPG",
         "highlights": [
             "Deslizador moderno con chalecos salvavidas y motores ecológicos",
             "Avistamiento de lobos marinos, pingüinos y aves guaneras",
@@ -57,7 +57,7 @@ INITIAL_PACKAGES = [
         "duration": "Full Day (10 hrs)",
         "price": 390.0,
         "description": "Vista aérea de los misteriosos geoglifos milenarios (El Colibrí, El Mono, El Astronauta, La Araña) en avionetas Cessna con ventana individual.",
-        "image_url": "https://images.unsplash.com/photo-1526392060635-9d6019884377?w=800&q=80",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d1/Nazca_Lines_Hummingbird_%28cropped%29.jpg/960px-Nazca_Lines_Hummingbird_%28cropped%29.jpg",
         "highlights": [
             "Avionetas Cessna Grand Caravan con ventana individual para cada pasajero",
             "Pilotos bilingües altamente calificados",
@@ -80,7 +80,7 @@ INITIAL_PACKAGES = [
         "duration": "2 Días / 1 Noche",
         "price": 580.0,
         "description": "Campamento de lujo bajo el cielo estrellado del desierto iqueño con domo privado, fogata, cena parrillera gourmet y maridaje de pisco.",
-        "image_url": "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=800&q=80",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3d/View_from_Honeymoon_Desert_Tent_..._%2850950160223%29.jpg/960px-View_from_Honeymoon_Desert_Tent_..._%2850950160223%29.jpg",
         "highlights": [
             "Domo privado de lujo con cama confortable, alfombras y luces cálidas",
             "Cena parrillera con maridaje de vino y pisco iqueño",
@@ -104,7 +104,7 @@ INITIAL_PACKAGES = [
         "duration": "1 Día (5 hrs)",
         "price": 110.0,
         "description": "Recorrido vitivinícola tradicional en el Valle de Ica con cata guiada de piscos de uvas quebranta, italia, acholado y visita a falcas coloniales.",
-        "image_url": "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?w=800&q=80",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/db/Bodega_El_Catador_%287521862384%29.jpg/960px-Bodega_El_Catador_%287521862384%29.jpg",
         "highlights": [
             "Degustación guiada de piscos y vinos premiados internacionalmente",
             "Historia de la destilación tradicional en Ica y falcas de cobre",
@@ -127,7 +127,7 @@ INITIAL_PACKAGES = [
         "duration": "Full Day (8 hrs)",
         "price": 190.0,
         "description": "Aventura todoterreno hacia el cañón milenario en el desierto de Ocucaje. Paisajes paleontológicos únicos, fósiles marinos y grietas gigantescas.",
-        "image_url": "https://images.unsplash.com/photo-1682687220742-aba13b6e50ba?w=800&q=80",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6b/Ca%C3%B1%C3%B3n_de_los_Perdidos.jpg/960px-Ca%C3%B1%C3%B3n_de_los_Perdidos.jpg",
         "highlights": [
             "Camionetas 4x4 acondicionadas y equipadas para desierto profundo",
             "Trekking moderado por el fondo del cañón y lagunas de agua salobre",
@@ -150,7 +150,7 @@ INITIAL_PACKAGES = [
         "duration": "Medio Día (3.5 hrs)",
         "price": 75.0,
         "description": "Visita al legendario pueblo de las Brujas de Cachiche, la enigmática Palmera de las 7 Cabezas, el Santuario del Señor de Luren y dulcerías de tejas.",
-        "image_url": "https://images.unsplash.com/photo-1518457607834-6e8d80c183c5?w=800&q=80",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/73/ESTATUA_DE_LA_BRUJA_DE_CACHICHE.jpg/960px-ESTATUA_DE_LA_BRUJA_DE_CACHICHE.jpg",
         "highlights": [
             "Monumento a la famosa Bruja Julia Hernández Pecho",
             "Leyenda y visita a la enigmática Palmera de las 7 Cabezas",
@@ -173,7 +173,7 @@ INITIAL_PACKAGES = [
         "duration": "Full Day (7 hrs)",
         "price": 120.0,
         "description": "Recorrido costero por las bahías más hermosas de la Reserva Nacional de Paracas con tiempo libre para baño en aguas cristalinas y fotografía.",
-        "image_url": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80",
+        "image_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/62/Playa_Roja_-_Paracas_National_Reserve%2C_Ica.jpg/960px-Playa_Roja_-_Paracas_National_Reserve%2C_Ica.jpg",
         "highlights": [
             "Tiempo libre para disfrutar y bañarse en Playa La Mina y Raspón",
             "Mirador panorámico de la inusual Playa Roja y acantilados de roca",
