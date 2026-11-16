@@ -1,0 +1,292 @@
+/* ==========================================================================
+   RESPONSIVE DESIGN RULES - BUGANVILLA TOURS E.I.R.L.
+   Breakpoints: 1200px (Desktop), 992px (Laptop), 768px (Tablet), 480px (Mobile)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   DESKTOP / NOTEBOOK ADAPTATIONS (max-width: 1200px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 1200px) {
+  .container {
+    max-width: 960px;
+  }
+  .tours-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+  .hero-title {
+    font-size: 2.8rem;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   TABLET & COMPACT LAPTOP (max-width: 992px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 992px) {
+  .container {
+    max-width: 720px;
+  }
+
+  /* Navigation & Header */
+  .nav-menu {
+    display: none; /* Controlled via mobile drawer */
+  }
+  .mobile-nav-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Hero Section */
+  .hero-section {
+    min-height: 75vh;
+    padding: 60px 0;
+  }
+  .hero-title {
+    font-size: 2.4rem;
+  }
+  .hero-search-bar {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  /* Mission & Vision */
+  .mission-vision-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  /* Features & Stats */
+  .stats-bar-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  .features-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Wizard Booking Flow */
+  .wizard-content-layout {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .wizard-summary-sticky {
+    position: static;
+    margin-top: 24px;
+  }
+
+  /* Client Dashboard */
+  .dashboard-layout {
+    flex-direction: column;
+  }
+  .dashboard-sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid var(--border-light);
+  }
+  .dashboard-nav-list {
+    display: flex;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    gap: 8px;
+  }
+  .dashboard-nav-item {
+    white-space: nowrap;
+  }
+
+  /* Contact Page / Section */
+  .contact-wrapper {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  /* Footer */
+  .footer-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   TABLET VERTICAL & LARGE PHONES (max-width: 768px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  .container {
+    max-width: 540px;
+    padding: 0 16px;
+  }
+
+  .site-header {
+    height: 68px;
+  }
+  body {
+    padding-top: 68px;
+  }
+
+  .brand-logo-img {
+    height: 38px;
+  }
+  .brand-title {
+    font-size: 1.1rem;
+  }
+  .brand-subtitle {
+    display: none;
+  }
+
+  /* Hero */
+  .hero-section {
+    min-height: 65vh;
+    padding: 40px 0;
+  }
+  .hero-title {
+    font-size: 1.95rem;
+  }
+  .hero-subtitle {
+    font-size: 1.05rem;
+  }
+  .hero-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+  .hero-actions .btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  /* Tour Cards */
+  .tours-grid {
+    grid-template-columns: 1fr;
+  }
+  .tour-card-header {
+    height: 200px;
+  }
+
+  /* Wizard Steps Nav */
+  .wizard-steps-track {
+    overflow-x: auto;
+    justify-content: flex-start;
+    padding: 12px 6px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .step-node {
+    flex-shrink: 0;
+  }
+  .step-title {
+    font-size: 0.78rem;
+  }
+
+  /* Payment Selection */
+  .payment-methods-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Voucher */
+  .voucher-card {
+    padding: 24px 16px;
+  }
+  .voucher-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .voucher-details-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Modals */
+  .modal-dialog {
+    width: 95%;
+    max-width: 95%;
+    padding: 24px 18px;
+    margin: 16px;
+  }
+  .auth-form-card {
+    padding: 28px 20px;
+  }
+
+  /* Floating WhatsApp */
+  .whatsapp-float-btn {
+    bottom: 18px;
+    right: 18px;
+    width: 52px;
+    height: 52px;
+  }
+  .whatsapp-float-tooltip {
+    display: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   SMALL PHONES & COMPACT MOBILE (max-width: 480px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 1.65rem;
+  }
+  .section-title {
+    font-size: 1.5rem;
+  }
+  .section-tagline {
+    font-size: 0.85rem;
+  }
+
+  .stats-bar-grid {
+    grid-template-columns: 1fr;
+  }
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .currency-dropdown {
+    right: -40px;
+  }
+
+  .otp-inputs-group {
+    gap: 6px;
+  }
+  .otp-digit-input {
+    width: 42px;
+    height: 50px;
+    font-size: 1.25rem;
+  }
+
+  .btn {
+    padding: 12px 18px;
+    font-size: 0.9rem;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   PRINT STYLES FOR VOUCHERS & BOOKING TICKETS
+   -------------------------------------------------------------------------- */
+@media print {
+  body {
+    background: #FFFFFF !important;
+    color: #000000 !important;
+    padding: 0 !important;
+  }
+  .site-header,
+  .site-footer,
+  .whatsapp-float-btn,
+  .mobile-drawer-overlay,
+  .no-print,
+  .wizard-steps-track,
+  .wizard-actions {
+    display: none !important;
+  }
+  .wizard-page-wrap,
+  .dashboard-layout {
+    background: none !important;
+    padding: 0 !important;
+  }
+  .voucher-card {
+    box-shadow: none !important;
+    border: 2px solid #2A0845 !important;
+    page-break-inside: avoid;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}

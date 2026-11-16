@@ -1,0 +1,18 @@
+# Entorno Virtual Python
+venv/
+env/
+.venv/
+
+# Cache de Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Sistema operativo macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Logs y bases de datos locales
+*.log
