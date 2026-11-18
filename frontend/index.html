@@ -9,14 +9,19 @@
   <meta name="description" content="Buganvilla Tours - Agencia de viajes y tour operador oficial con más de 24 años de experiencia en Ica, Huacachina, Paracas, Nasca y Chincha. Reserva paquetes en Soles con Yape.">
   <link rel="icon" href="https://buganvillatours.com/wp-content/uploads/2016/09/Logo-Buganvilla-web.png" type="image/png">
 
-  <!-- Google Fonts: Inter & Plus Jakarta Sans for refined editorial modern typography -->
+  <!-- Google Fonts: Bricolage Grotesque (Gabo display), Instrument Serif (Gabo italic accent), Plus Jakarta Sans & Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+
+  <!-- Barra de Progreso Superior (Gabo +10% Fusion) -->
+  <div class="scroll-progress" aria-hidden="true">
+    <span class="scroll-progress-bar"></span>
+  </div>
 
   <!-- ==========================================================================
        HEADER OFICIAL BUGANVILLA TOURS
@@ -40,11 +45,10 @@
       <!-- Menu Links -->
       <ul class="nav-menu">
         <li><a href="#home" class="nav-link active" onclick="navigate('home')">Inicio</a></li>
-        <li><a href="#home" class="nav-link" onclick="scrollToSection('institucional')">Misión & Visión</a></li>
+        <li><a href="#home" class="nav-link" onclick="scrollToSection('experiencias')">Experiencias UTV</a></li>
         <li><a href="#home" class="nav-link" onclick="scrollToSection('destinos')">Destinos</a></li>
-        <li><a href="#home" class="nav-link" onclick="scrollToSection('paquetes')">Paquetes en Soles</a></li>
-        <li><a href="#home" class="nav-link" onclick="scrollToSection('galeria')">Galería</a></li>
-        <li><a href="#home" class="nav-link" onclick="scrollToSection('faq')">Preguntas</a></li>
+        <li><a href="#home" class="nav-link" onclick="scrollToSection('paquetes')">Paquetes</a></li>
+        <li><a href="#home" class="nav-link" onclick="scrollToSection('institucional')">Nosotros</a></li>
         <li><a href="#home" class="nav-link" onclick="scrollToSection('contacto')">Contacto</a></li>
       </ul>
 
@@ -71,6 +75,13 @@
             </button>
           </div>
         </div>
+
+        <!-- Gabo 65% "Mi viaje" button with counter badge -->
+        <button class="nav-plan-btn" id="planBtn" onclick="togglePlanDrawer()" title="Ver recorridos guardados en Mi Viaje" type="button">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+          <span class="plan-btn-text">Mi viaje</span>
+          <span id="planCount" class="count-badge">0</span>
+        </button>
 
         <!-- Guest Button -->
         <div id="navGuestBox">
@@ -117,11 +128,15 @@
     </div>
     <div style="display: flex; flex-direction: column; gap: 14px;">
       <a href="#home" onclick="navigate('home'); toggleMobileNav();" style="font-weight: 600;">Inicio</a>
-      <a href="#home" onclick="scrollToSection('institucional'); toggleMobileNav();" style="font-weight: 600;">Misión & Visión</a>
+      <a href="#home" onclick="scrollToSection('experiencias'); toggleMobileNav();" style="font-weight: 600;">Experiencias UTV</a>
       <a href="#home" onclick="scrollToSection('destinos'); toggleMobileNav();" style="font-weight: 600;">Destinos de Ica</a>
-      <a href="#home" onclick="scrollToSection('paquetes'); toggleMobileNav();" style="font-weight: 600;">Paquetes en Soles</a>
-      <a href="#home" onclick="scrollToSection('galeria'); toggleMobileNav();" style="font-weight: 600;">Galería</a>
+      <a href="#home" onclick="scrollToSection('paquetes'); toggleMobileNav();" style="font-weight: 600;">Paquetes Turísticos</a>
+      <a href="#home" onclick="scrollToSection('institucional'); toggleMobileNav();" style="font-weight: 600;">Nosotros</a>
       <a href="#home" onclick="scrollToSection('contacto'); toggleMobileNav();" style="font-weight: 600;">Contacto</a>
+      <button onclick="togglePlanDrawer(); toggleMobileNav();" class="btn btn-outline btn-block btn-sm" style="margin-top: 6px; display: flex; align-items: center; justify-content: center; gap: 8px;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        Mi Viaje
+      </button>
       <hr style="border: 0; border-top: 1px solid var(--border-light);">
       <a href="#login" class="btn btn-primary btn-block btn-sm" onclick="navigate('login'); toggleMobileNav();">Ingresar al Sistema</a>
     </div>
@@ -133,58 +148,359 @@
   <main id="app-root">
 
     <!-- ========================================================================
-         VISTA 1: HOME PAGE
+         VISTA 1: HOME PAGE (GABO 65% + DIEGO 35% FUSION)
          ======================================================================== -->
     <section id="view-home" class="app-view active">
       
-      <!-- HERO: Huacachina Desert Lagoon & Dunes -->
+      <!-- HERO: Huacachina Desert Lagoon & Dunes (Clean, Minimal & Luxury) -->
       <div class="hero-section">
         <div class="container hero-content">
-          <div class="hero-badge-pill">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="#E2C275"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-            Operador Turístico Oficial · 24+ Años en Ica y Sur del Perú
-          </div>
-
-          <h1 class="hero-title">
-            Vive la Magia de <span>Ica, Paracas</span> y el Gran Desierto
+          <h1 class="hero-title reveal-up">
+            Vive la magia entre el <i>desierto</i> y el <i>mar</i> de Ica
           </h1>
 
-          <p class="hero-subtitle">
-            Desde la adrenalina en los tubulares de Huacachina hasta la fauna marina de las Islas Ballestas y el misticismo de Cachiche. Tarifas transparentes en Soles con confirmación inmediata vía Yape.
+          <p class="hero-subtitle reveal-up delay-1">
+            Expediciones exclusivas y salidas diarias a Huacachina, Paracas y Nasca. Descubre la calidez del sur con Buganvilla Tours.
           </p>
 
-          <div class="hero-cta-group">
-            <a href="#home" onclick="scrollToSection('paquetes')" class="btn btn-primary" style="font-size: 1.05rem; padding: 14px 32px;">
-              Explorar Paquetes en Soles
+          <div class="hero-cta-group reveal-up delay-2">
+            <a href="#home" onclick="scrollToSection('planifica')" class="btn btn-primary btn-glow" style="font-size: 1.05rem; padding: 14px 32px;">
+              Planificar mi Salida
               <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M5 13h11.86l-5.43 5.43 1.42 1.42L21.71 12l-8.86-7.85-1.42 1.42L16.86 11H5v2z"/></svg>
             </a>
-            <a href="#home" onclick="scrollToSection('institucional')" class="btn btn-outline" style="font-size: 1.05rem; padding: 14px 30px;">
-              Conoce Nuestra Empresa
+            <a href="#home" onclick="scrollToSection('experiencias')" class="btn btn-outline" style="font-size: 1.05rem; padding: 14px 28px;">
+              Ver Experiencias UTV
             </a>
           </div>
 
-          <div class="hero-highlights-strip">
-            <div class="hero-strip-item">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="#00D68F"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>
-              <span>Pago Inmediato con Yape & Tarjetas</span>
-            </div>
-            <div class="hero-strip-item">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="#E2C275"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
-              <span>Licencia DIRCETUR Ica Nº 042</span>
-            </div>
-            <div class="hero-strip-item">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="#FFFFFF"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14h2v2h-2zm0-10h2v8h-2z"/></svg>
-              <span>Transporte Privado & Guías Bilingües</span>
-            </div>
+          <!-- Hero Territory / Destination Switcher -->
+          <div class="hero-dests reveal-up delay-3" aria-label="Elegir territorio turístico">
+            <button type="button" class="hero-dest-btn active" data-dest="huacachina" onclick="selectHeroTerritory('huacachina')">
+              <span class="hero-dest-bar"></span>
+              <span class="hero-dest-num">01 / DUNAS</span>
+              <strong class="hero-dest-title">Huacachina</strong>
+              <span class="hero-dest-tag">UTV & Sandboarding</span>
+            </button>
+            <button type="button" class="hero-dest-btn" data-dest="paracas" onclick="selectHeroTerritory('paracas')">
+              <span class="hero-dest-bar"></span>
+              <span class="hero-dest-num">02 / RESERVA</span>
+              <strong class="hero-dest-title">Paracas</strong>
+              <span class="hero-dest-tag">Ballestas & Fauna</span>
+            </button>
+            <button type="button" class="hero-dest-btn" data-dest="nasca" onclick="selectHeroTerritory('nasca')">
+              <span class="hero-dest-bar"></span>
+              <span class="hero-dest-num">03 / PAMPA</span>
+              <strong class="hero-dest-title">Nasca</strong>
+              <span class="hero-dest-tag">Sobrevuelo Líneas</span>
+            </button>
+            <button type="button" class="hero-dest-btn" data-dest="ica" onclick="selectHeroTerritory('ica')">
+              <span class="hero-dest-bar"></span>
+              <span class="hero-dest-num">04 / VALLE</span>
+              <strong class="hero-dest-title">Ica</strong>
+              <span class="hero-dest-tag">Ruta del Pisco</span>
+            </button>
           </div>
         </div>
       </div>
+
+      <!-- 02 · PLANIFICADOR & BOOKING BAR (GABO 65%) -->
+      <section class="planner-section" id="planifica">
+        <div class="container">
+          <div class="planner-card reveal-up">
+            <div class="planner-label">
+              <h2>Planifica tu salida al sur</h2>
+              <p>Destino, fecha y número de viajeros.</p>
+            </div>
+            <form class="book-bar" id="searchForm" onsubmit="filterFromBookBar(event)">
+              <div class="book-field">
+                <label for="bookBarDest">Destino</label>
+                <div class="book-input">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                  <select id="bookBarDest">
+                    <option value="all">Todos los destinos de Ica</option>
+                    <option value="huacachina" selected>Huacachina (Dunas & UTV)</option>
+                    <option value="paracas">Paracas (Ballestas & Reserva)</option>
+                    <option value="nasca">Nasca (Sobrevuelo)</option>
+                    <option value="ica">Ica (Ruta del Pisco & Cachiche)</option>
+                  </select>
+                </div>
+              </div>
+              <div class="book-field">
+                <label for="bookBarDate">Fecha Salida</label>
+                <div class="book-input">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                  <input type="date" id="bookBarDate">
+                </div>
+              </div>
+              <div class="book-field">
+                <label for="bookBarPax">Viajeros</label>
+                <div class="book-input">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                  <select id="bookBarPax">
+                    <option value="1">1 viajero</option>
+                    <option value="2" selected>2 viajeros</option>
+                    <option value="3">3 viajeros</option>
+                    <option value="4">4 viajeros</option>
+                    <option value="5">5 viajeros</option>
+                    <option value="6">6+ viajeros</option>
+                  </select>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary book-go">
+                <span>Ver opciones</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M5 13h11.86l-5.43 5.43 1.42 1.42L21.71 12l-8.86-7.85-1.42 1.42L16.86 11H5v2z"/></svg>
+              </button>
+            </form>
+          </div>
+
+          <!-- 3-Step Decision Strip -->
+          <ol class="steps-strip">
+            <li class="step-item">
+              <span class="step-num">01</span>
+              <div class="step-body">
+                <h4>Elige el recorrido</h4>
+                <p>Huacachina, Islas Ballestas, Nasca o el valle vitivinícola de Ica.</p>
+              </div>
+            </li>
+            <li class="step-item">
+              <span class="step-num">02</span>
+              <div class="step-body">
+                <h4>Define tu salida</h4>
+                <p>Indica fecha, cantidad de viajeros y turno en la mañana o sunset.</p>
+              </div>
+            </li>
+            <li class="step-item">
+              <span class="step-num">03</span>
+              <div class="step-body">
+                <h4>Reserva inmediata</h4>
+                <p>Confirmación con voucher digital, soporte y pago seguro garantizado.</p>
+              </div>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- 03 · CINTA INFINITA DE DESTINOS (LUXURY MARQUEE) -->
+      <div class="marquee-section" aria-hidden="true">
+        <div class="marquee-track">
+          <div class="marquee-group">
+            <span class="mq-text mq-solid">Huacachina</span>
+            <i class="mq-photo" style="background-image: url('images/huacachina-tubulares.jpg'), url('https://buganvillatours.com/wp-content/uploads/2025/06/Tour-Paseo-Premium-en-UTV-Huacachina3.jpg');"></i>
+            <span class="mq-text mq-outline">Paracas</span>
+            <span class="mq-spark">✦</span>
+            <span class="mq-text mq-solid">Nasca</span>
+            <i class="mq-photo" style="background-image: url('images/islas-ballestas.jpg'), url('https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Islas_Ballestas_2.JPG/960px-Islas_Ballestas_2.JPG');"></i>
+            <span class="mq-text mq-outline">Ica</span>
+            <span class="mq-spark">✦</span>
+            <span class="mq-text mq-solid">Cañón Perdidos</span>
+            <i class="mq-photo" style="background-image: url('images/ruta-pisco.jpg'), url('https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Bodega_El_Catador_%287521862384%29.jpg/960px-Bodega_El_Catador_%287521862384%29.jpg');"></i>
+            <span class="mq-text mq-outline">Cachiche</span>
+            <span class="mq-spark">✦</span>
+          </div>
+          <div class="marquee-group">
+            <span class="mq-text mq-solid">Huacachina</span>
+            <i class="mq-photo" style="background-image: url('images/huacachina-tubulares.jpg'), url('https://buganvillatours.com/wp-content/uploads/2025/06/Tour-Paseo-Premium-en-UTV-Huacachina3.jpg');"></i>
+            <span class="mq-text mq-outline">Paracas</span>
+            <span class="mq-spark">✦</span>
+            <span class="mq-text mq-solid">Nasca</span>
+            <i class="mq-photo" style="background-image: url('images/islas-ballestas.jpg'), url('https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Islas_Ballestas_2.JPG/960px-Islas_Ballestas_2.JPG');"></i>
+            <span class="mq-text mq-outline">Ica</span>
+            <span class="mq-spark">✦</span>
+            <span class="mq-text mq-solid">Cañón Perdidos</span>
+            <i class="mq-photo" style="background-image: url('images/ruta-pisco.jpg'), url('https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Bodega_El_Catador_%287521862384%29.jpg/960px-Bodega_El_Catador_%287521862384%29.jpg');"></i>
+            <span class="mq-text mq-outline">Cachiche</span>
+            <span class="mq-spark">✦</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 04 · MANIFIESTO EDITORIAL & STATS (GABO 65% + BUGANVILLA ROOTS) -->
+      <section class="manifesto-section" id="manifiesto">
+        <div class="container">
+          <div class="manifesto-grid reveal-up">
+            <div class="manifesto-copy">
+              <div class="manifesto-kicker">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="#E2C275"><path d="M12 2l2.4 7.2h7.6l-6.1 4.5 2.3 7.3-6.2-4.6-6.2 4.6 2.3-7.3-6.1-4.5h7.6z"/></svg>
+                <span>Buganvilla Tours EIRL · Ica, Perú</span>
+              </div>
+              <h2 class="manifesto-title">
+                Desde <i>2001</i> llevamos viajeros al desierto, al mar y a las pampas de Ica. Un equipo local, rutas claras y la luz dorada del sur en cada salida.
+              </h2>
+              <p class="manifesto-desc">
+                Nacimos en Ica hace más de dos décadas con el compromiso de crear vivencias auténticas y seguras. Cada piloto en las dunas de Huacachina, cada capitán en la bahía de Paracas y cada guía oficial comparte el orgullo por la riqueza natural, histórica y vitivinícola de nuestra tierra.
+              </p>
+              <a href="#paquetes" onclick="scrollToSection('paquetes')" class="btn btn-outline-dark">
+                Conocer Nuestros Programas
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M5 13h11.86l-5.43 5.43 1.42 1.42L21.71 12l-8.86-7.85-1.42 1.42L16.86 11H5v2z"/></svg>
+              </a>
+            </div>
+            <figure class="manifesto-photo-wrap">
+              <img src="images/huacachina-sunset.jpg" 
+                   onerror="this.src='https://buganvillatours.com/wp-content/uploads/2025/06/Tour-Paseo-Premium-en-UTV-Huacachina2.jpg'" 
+                   alt="Viajeros en la cresta de una duna en Huacachina al atardecer" 
+                   class="manifesto-photo" 
+                   loading="lazy">
+              <div class="manifesto-photo-caption">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="#E2C275"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                <span>Operador directo en Huacachina · Salidas diarias garantizadas</span>
+              </div>
+            </figure>
+          </div>
+
+          <!-- Stats Counters with scroll animation -->
+          <div class="stats-strip">
+            <div class="stat-item">
+              <span class="stat-num" data-target="2001" data-from="1980">2001</span>
+              <span class="stat-label">Año en que empezamos nuestras operaciones en Ica</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-num" data-target="24" data-from="0" data-suffix="+">24+</span>
+              <span class="stat-label">Años de liderazgo ininterrumpido en turismo receptivo</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-num" data-target="8" data-from="0">8</span>
+              <span class="stat-label">Recorridos y paquetes exclusivos con salida diaria</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-num" data-target="100" data-from="0" data-suffix="%">100%</span>
+              <span class="stat-label">Flota propia con SOAT turístico y pilotos autorizados</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 05 · HISTORIA UTV: CUATRO MOMENTOS (GABO 65% + FOTOS AUTÉNTICAS) -->
+      <section class="story-section" id="experiencias">
+        <div class="container">
+          <div class="story-head">
+            <div>
+              <div class="story-eyebrow">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="#E2C275"><circle cx="12" cy="12" r="5"/></svg>
+                <span>Huacachina · UTV & Tubulares Privados</span>
+              </div>
+              <h2 class="story-title">Una hora <i>entre dunas.</i></h2>
+            </div>
+            <div class="story-specs">
+              <div class="story-spec-item">
+                <span>Duración</span>
+                <strong>60 min</strong>
+              </div>
+              <div class="story-spec-item">
+                <span>Capacidad</span>
+                <strong>Hasta 3 / vehículo</strong>
+              </div>
+              <div class="story-spec-item">
+                <span>Turnos</span>
+                <strong>10:00 · 14:00 · 16:30</strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4 Moments Grid -->
+          <div class="story-grid">
+            <article class="story-card reveal-up delay-1">
+              <div class="story-card-media">
+                <img src="images/Tour-Paseo-Premium-en-UTV-Huacachina4.jpg" 
+                     onerror="this.src='https://buganvillatours.com/wp-content/uploads/2025/06/Tour-Paseo-Premium-en-UTV-Huacachina4.jpg'" 
+                     alt="Presentación y equipo para el recorrido en UTV Huacachina" 
+                     loading="lazy">
+                <span class="story-step-badge">01</span>
+              </div>
+              <div class="story-card-body">
+                <h3>Encuentro</h3>
+                <p>Recepción en punto de encuentro en Huacachina. Recibes casco certificado, lentes antipolvo y charla de seguridad con el piloto.</p>
+              </div>
+            </article>
+
+            <article class="story-card reveal-up delay-2">
+              <div class="story-card-media">
+                <img src="images/Tour-Paseo-Premium-en-UTV-Huacachina3.jpg" 
+                     onerror="this.src='https://buganvillatours.com/wp-content/uploads/2025/06/Tour-Paseo-Premium-en-UTV-Huacachina3.jpg'" 
+                     alt="UTV de Buganvilla Tours cruzando las dunas de Huacachina" 
+                     loading="lazy">
+                <span class="story-step-badge">02</span>
+              </div>
+              <div class="story-card-body">
+                <h3>Dunas</h3>
+                <p>Aceleración y adrenalina sobre las dunas milenarias. Subidas empinadas y bajadas emocionantes en vehículos de alta suspensión.</p>
+              </div>
+            </article>
+
+            <article class="story-card reveal-up delay-3">
+              <div class="story-card-media">
+                <img src="images/Tour-Paseo-Premium-en-UTV-Huacachina2.jpg" 
+                     onerror="this.src='https://buganvillatours.com/wp-content/uploads/2025/06/Tour-Paseo-Premium-en-UTV-Huacachina2.jpg'" 
+                     alt="Viajeros observando el atardecer en el mirador de Huacachina" 
+                     loading="lazy">
+                <span class="story-step-badge">03</span>
+              </div>
+              <div class="story-card-body">
+                <h3>Mirador</h3>
+                <p>Pausa panorámica en la cresta más alta para contemplar el oasis de Huacachina y los tonos dorados del sol poniente.</p>
+              </div>
+            </article>
+
+            <article class="story-card reveal-up delay-4">
+              <div class="story-card-media">
+                <img src="images/Tour-Paseo-Premium-en-UTV-Huacachina.jpg" 
+                     onerror="this.src='https://buganvillatours.com/wp-content/uploads/2025/06/Tour-Paseo-Premium-en-UTV-Huacachina.jpg'" 
+                     alt="Descenso en sandboard en las dunas de Ica" 
+                     loading="lazy">
+                <span class="story-step-badge">04</span>
+              </div>
+              <div class="story-card-body">
+                <h3>Sandboard</h3>
+                <p>Descensos en tabla sobre dunas vírgenes con cera e instrucción técnica incluida para principiantes y experimentados.</p>
+              </div>
+            </article>
+          </div>
+
+          <!-- CTA Banner -->
+          <div class="story-cta-banner reveal-up">
+            <div class="story-cta-copy">
+              <h3>¿Listo para vivir la adrenalina en Huacachina?</h3>
+              <p>Reserva tu salida en UTV o Tubular con tarifa garantizada y confirmación inmediata.</p>
+            </div>
+            <button class="btn btn-primary btn-glow" onclick="startBookingFlow(1)" style="font-size: 1.05rem; padding: 14px 32px;">
+              Reservar UTV Huacachina
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M5 13h11.86l-5.43 5.43 1.42 1.42L21.71 12l-8.86-7.85-1.42 1.42L16.86 11H5v2z"/></svg>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 06 · TESTIMONIOS EDITORIALES (GABO +10% FUSION) -->
+      <section class="quote-section" id="testimonios" aria-label="Reseñas de viajeros">
+        <div class="container quote-inner reveal-up">
+          <div class="quote-eyebrow">
+            <span class="pulse-dot"></span>
+            <span>Viajeros de Buganvilla Tours</span>
+          </div>
+          <span class="quote-mark" aria-hidden="true">&ldquo;</span>
+          <p class="quote-text" id="quoteText">
+            "El atardecer sobre las dunas de <i>Huacachina</i> y el recorrido en tubulares fue la experiencia más emocionante de nuestro viaje por el Perú. La puntualidad y calidez de Buganvilla Tours superaron todas nuestras expectativas."
+          </p>
+          <div class="quote-author">
+            <strong id="quoteAuthor">Familia Valdivia Morales</strong>
+            <span id="quoteTag">Viajeros desde Lima · Tour Huacachina & Sandboard</span>
+          </div>
+          <div class="quote-controls">
+            <button type="button" class="quote-nav-btn" onclick="prevQuote()" aria-label="Reseña anterior">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+            <div class="quote-dots" id="quoteDots"></div>
+            <button type="button" class="quote-nav-btn" onclick="nextQuote()" aria-label="Siguiente reseña">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+          </div>
+        </div>
+      </section>
 
       <!-- SECCIÓN INSTITUCIONAL: MISIÓN Y VISIÓN (DATOS OFICIALES) -->
       <section class="institutional-section" id="institucional">
         <div class="container">
           
-          <div class="section-header">
+          <div class="section-header reveal-up">
             <span class="section-tag">Institucional · Buganvilla Tours E.I.R.L.</span>
             <h2 class="section-title">Nuestra Misión y Visión</h2>
             <p class="section-desc">
@@ -195,7 +511,7 @@
           <div class="mision-vision-grid">
             
             <!-- Misión Oficial -->
-            <div class="mision-card">
+            <div class="mision-card reveal-up delay-1">
               <div class="inst-icon-wrap">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-5.5-2.5l7.51-3.49L17.5 6.5 9.99 9.99 6.5 17.5zm5.5-6.6c.61 0 1.1.49 1.1 1.1s-.49 1.1-1.1 1.1-1.1-.49-1.1-1.1.49-1.1 1.1-1.1z"/></svg>
               </div>
@@ -209,7 +525,7 @@
             </div>
 
             <!-- Visión Oficial -->
-            <div class="vision-card">
+            <div class="vision-card reveal-up delay-2">
               <div class="inst-icon-wrap" style="background: var(--primary-dark);">
                 <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
               </div>
@@ -225,7 +541,7 @@
           </div>
 
           <!-- Valores de la Empresa -->
-          <div class="values-strip">
+          <div class="values-strip reveal-up delay-3">
             <div class="val-item">
               <h4>Compromiso & Seguridad</h4>
               <p>Vehículos modernos con aire acondicionado, GPS y pólizas de seguro al 100%.</p>
@@ -251,7 +567,7 @@
       <section class="destinations-section" id="destinos">
         <div class="container">
           
-          <div class="section-header">
+          <div class="section-header reveal-up">
             <span class="section-tag">Región Ica · Joyas del Sur</span>
             <h2 class="section-title">Destinos que Enamoran</h2>
             <p class="section-desc">
@@ -262,62 +578,80 @@
           <div class="dest-grid">
             
             <!-- 1. Huacachina -->
-            <div class="dest-card" onclick="scrollToSection('paquetes')">
+            <div class="dest-card reveal-up delay-1" onclick="selectDestinationAndFilter('huacachina')">
               <div class="dest-card-bg" style="background-image: url('https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4c/Oasis_de_Huacachina%2C_Ica%2C_Per%C3%BA%2C_2015-07-29%2C_DD_23.JPG/960px-Oasis_de_Huacachina%2C_Ica%2C_Per%C3%BA%2C_2015-07-29%2C_DD_23.JPG');"></div>
               <div class="dest-card-overlay">
                 <span class="dest-tag">Ica · Desierto</span>
                 <h3 class="dest-name">Oasis de Huacachina</h3>
                 <p class="dest-desc">El único oasis natural de América entre dunas doradas, perfecto para buggies y sandboarding.</p>
+                <div class="dest-action-pill">
+                  <span>Ver paquetes de Huacachina →</span>
+                </div>
               </div>
             </div>
 
             <!-- 2. Paracas & Ballestas -->
-            <div class="dest-card" onclick="scrollToSection('paquetes')">
+            <div class="dest-card reveal-up delay-2" onclick="selectDestinationAndFilter('paracas')">
               <div class="dest-card-bg" style="background-image: url('https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3d/Islas_Ballestas_2.JPG/960px-Islas_Ballestas_2.JPG');"></div>
               <div class="dest-card-overlay">
                 <span class="dest-tag">Pisco · Océano</span>
                 <h3 class="dest-name">Islas Ballestas & Paracas</h3>
-                <p class="dest-desc">Navegación en deslizadores para avistar lobos marinos, pingüinos de Humboldt y aves guaneras.</p>
+                <p class="dest-desc">Navegación en deslizadores para avistar lobos marinos, pingüinos de Humboldt y fauna costera.</p>
+                <div class="dest-action-pill">
+                  <span>Ver paquetes de Paracas →</span>
+                </div>
               </div>
             </div>
 
             <!-- 3. Pueblo de Cachiche -->
-            <div class="dest-card" onclick="scrollToSection('paquetes')">
+            <div class="dest-card reveal-up delay-3" onclick="selectDestinationAndFilter('ica')">
               <div class="dest-card-bg" style="background-image: url('https://thumb.wikimedia.org/wikipedia/commons/thumb/3/33/PALMERA_DE_SIETE_CABEZAS.jpg/960px-PALMERA_DE_SIETE_CABEZAS.jpg');"></div>
               <div class="dest-card-overlay">
                 <span class="dest-tag">Ica · Misticismo</span>
                 <h3 class="dest-name">Brujas de Cachiche</h3>
                 <p class="dest-desc">Tierra de brujas, la enigmática Palmera de las 7 Cabezas y secretos tradicionales de la campiña.</p>
+                <div class="dest-action-pill">
+                  <span>Ver paquetes culturales →</span>
+                </div>
               </div>
             </div>
 
             <!-- 4. Líneas de Nasca -->
-            <div class="dest-card" onclick="scrollToSection('paquetes')">
+            <div class="dest-card reveal-up delay-1" onclick="selectDestinationAndFilter('nasca')">
               <div class="dest-card-bg" style="background-image: url('https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d1/Nazca_Lines_Hummingbird_%28cropped%29.jpg/960px-Nazca_Lines_Hummingbird_%28cropped%29.jpg');"></div>
               <div class="dest-card-overlay">
                 <span class="dest-tag">Nasca · Arqueología</span>
                 <h3 class="dest-name">Líneas de Nasca</h3>
                 <p class="dest-desc">Sobrevuelos en avionetas Cessna para admirar el Colibrí, el Mono y la Araña desde el cielo.</p>
+                <div class="dest-action-pill">
+                  <span>Ver paquetes de Nasca →</span>
+                </div>
               </div>
             </div>
 
             <!-- 5. Playas de Paracas -->
-            <div class="dest-card" onclick="scrollToSection('paquetes')">
+            <div class="dest-card reveal-up delay-2" onclick="selectDestinationAndFilter('paracas')">
               <div class="dest-card-bg" style="background-image: url('https://thumb.wikimedia.org/wikipedia/commons/thumb/6/62/Playa_Roja_-_Paracas_National_Reserve%2C_Ica.jpg/960px-Playa_Roja_-_Paracas_National_Reserve%2C_Ica.jpg');"></div>
               <div class="dest-card-overlay">
                 <span class="dest-tag">Reserva Nacional</span>
                 <h3 class="dest-name">Playa Roja & La Mina</h3>
                 <p class="dest-desc">Aguas turquesas y contrastes únicos de arena roja donde el desierto se funde con el Pacífico.</p>
+                <div class="dest-action-pill">
+                  <span>Ver paquetes de Paracas →</span>
+                </div>
               </div>
             </div>
 
             <!-- 6. Cañón de los Perdidos -->
-            <div class="dest-card" onclick="scrollToSection('paquetes')">
+            <div class="dest-card reveal-up delay-3" onclick="selectDestinationAndFilter('ica')">
               <div class="dest-card-bg" style="background-image: url('https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6b/Ca%C3%B1%C3%B3n_de_los_Perdidos.jpg/960px-Ca%C3%B1%C3%B3n_de_los_Perdidos.jpg');"></div>
               <div class="dest-card-overlay">
                 <span class="dest-tag">Ocucaje · Expedición</span>
                 <h3 class="dest-name">Cañón de los Perdidos</h3>
                 <p class="dest-desc">Aventura 4x4 hacia profundas grietas paleontológicas milenarias en el corazón de Ocucaje.</p>
+                <div class="dest-action-pill">
+                  <span>Ver paquetes de expedición →</span>
+                </div>
               </div>
             </div>
 
@@ -330,7 +664,7 @@
       <section class="packages-section" id="paquetes">
         <div class="container">
           
-          <div class="section-header">
+          <div class="section-header reveal-up">
             <span class="section-tag">Tarifas Oficiales · En Soles Peruanos</span>
             <h2 class="section-title">Paquetes Turísticos Destacados</h2>
             <p class="section-desc">
@@ -339,7 +673,7 @@
           </div>
 
           <!-- Filtros de Categoría -->
-          <div class="packages-filter-bar">
+          <div class="packages-filter-bar reveal-up delay-1">
             <button class="filter-btn active" onclick="filterHomePackages('all', this)">Todos los Tours</button>
             <button class="filter-btn" onclick="filterHomePackages('aventura', this)">Aventura & Desierto</button>
             <button class="filter-btn" onclick="filterHomePackages('naturaleza', this)">Naturaleza & Mar</button>
@@ -358,7 +692,7 @@
       <section class="gallery-section" id="galeria">
         <div class="container">
           
-          <div class="section-header">
+          <div class="section-header reveal-up">
             <span class="section-tag">Fotografía Real · Ica y Paracas</span>
             <h2 class="section-title">Postales de Nuestras Rutas</h2>
             <p class="section-desc">
@@ -366,7 +700,7 @@
             </p>
           </div>
 
-          <div class="gallery-grid">
+          <div class="gallery-grid reveal-up delay-1">
             <div class="gallery-item span-2">
               <img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d4/Oasis_de_Huacachina%2C_Ica%2C_Per%C3%BA%2C_2015-07-29%2C_DD_18.JPG/960px-Oasis_de_Huacachina%2C_Ica%2C_Per%C3%BA%2C_2015-07-29%2C_DD_18.JPG" alt="Huacachina al atardecer" class="gallery-img" referrerpolicy="no-referrer">
               <div class="gallery-overlay"><span>Sunset en el Oasis de Huacachina</span></div>
@@ -400,7 +734,7 @@
       <section class="faq-section" id="faq">
         <div class="container">
           
-          <div class="section-header">
+          <div class="section-header reveal-up">
             <span class="section-tag">Resuelve tus Dudas</span>
             <h2 class="section-title">Preguntas Frecuentes</h2>
             <p class="section-desc">
@@ -408,7 +742,7 @@
             </p>
           </div>
 
-          <div class="faq-accordion">
+          <div class="faq-accordion reveal-up delay-1">
             
             <div class="faq-item open">
               <div class="faq-question" onclick="toggleFaq(this)">
@@ -539,7 +873,7 @@
       <footer class="footer-main">
         <div class="container">
           
-          <div class="footer-grid">
+          <div class="footer-grid reveal-up">
             <div class="footer-col">
               <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
                 <img src="https://buganvillatours.com/wp-content/uploads/2016/09/Logo-Buganvilla-web.png" 
@@ -589,7 +923,7 @@
             </div>
           </div>
 
-          <div class="footer-bottom">
+          <div class="footer-bottom reveal-up delay-2">
             <span>© 2001 - 2026 Buganvilla Tours E.I.R.L. Todos los derechos reservados. RUC 20534892019.</span>
             <span>Ica · Paracas · Nasca · Chincha, Perú</span>
           </div>
@@ -1101,111 +1435,162 @@
     </section>
 
     <!-- ========================================================================
-         VISTA 5: WIZARD DE RESERVA Y PASARELA DE PAGO CON YAPE
+         VISTA 5: WIZARD DE RESERVA Y PASARELA DE PAGO CON YAPE (REVAMPED)
          ======================================================================== -->
     <section id="view-booking" class="app-view">
       <div class="wizard-page-wrap">
-        <div class="wizard-container">
+        <div class="wizard-container reveal-up is-visible">
           
-          <!-- Stepper -->
+          <!-- Navegación Superior y Breadcrumb -->
+          <div class="wizard-header-nav">
+            <button type="button" class="btn btn-outline-dark btn-sm" onclick="navigate('home'); scrollToSection('paquetes');">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+              ← Volver al Catálogo
+            </button>
+            <div class="wizard-breadcrumb">
+              <span>Inicio</span>
+              <span>/</span>
+              <span>Tours Ica</span>
+              <span>/</span>
+              <strong id="wBreadcrumbTitle">Reservar Tour</strong>
+            </div>
+          </div>
+
+          <!-- Hero Preview del Tour Seleccionado -->
+          <div class="wizard-tour-hero">
+            <div class="wizard-tour-thumb-wrap">
+              <img id="wPkgHeroImg" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4c/Oasis_de_Huacachina%2C_Ica%2C_Per%C3%BA%2C_2015-07-29%2C_DD_23.JPG/960px-Oasis_de_Huacachina%2C_Ica%2C_Per%C3%BA%2C_2015-07-29%2C_DD_23.JPG" alt="Tour seleccionado" class="wizard-tour-thumb">
+              <span class="wizard-tour-cat" id="wPkgBadge">AVENTURA</span>
+            </div>
+            <div class="wizard-tour-details">
+              <div class="wizard-tour-meta">
+                <span id="wPkgDuration">Medio Día</span>
+                <span>•</span>
+                <span style="color: var(--accent-teal); font-weight: 700;">Salida Diaria Garantizada</span>
+              </div>
+              <h3 id="wPkgTitle" class="wizard-tour-name">Aventura en Huacachina</h3>
+              <p id="wPkgDesc" class="wizard-tour-sub">Adrenalina pura en carros tubulares por las dunas gigantes y práctica de sandboarding.</p>
+              <div class="wizard-tour-pricing">
+                <span class="wizard-tour-rate" id="wPkgPrice">S/. 85.00 por persona</span>
+                <span class="wizard-tour-note">Impuestos y seguro SOAT incluidos</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Stepper Dinámico con Etiquetas -->
           <div class="wizard-progress-bar">
-            <div class="wizard-step-node active" id="wnode-1">1</div>
-            <div class="wizard-step-node" id="wnode-2">2</div>
-            <div class="wizard-step-node" id="wnode-3">3</div>
-            <div class="wizard-step-node" id="wnode-4">4</div>
-            <div class="wizard-step-node" id="wnode-5">5</div>
+            <div class="wizard-step-node active" id="wnode-1">
+              <span>1</span>
+              <span class="wizard-step-sublabel">Salida</span>
+            </div>
+            <div class="wizard-step-node" id="wnode-2">
+              <span>2</span>
+              <span class="wizard-step-sublabel">Pasajero</span>
+            </div>
+            <div class="wizard-step-node" id="wnode-3">
+              <span>3</span>
+              <span class="wizard-step-sublabel">Resumen</span>
+            </div>
+            <div class="wizard-step-node" id="wnode-4">
+              <span>4</span>
+              <span class="wizard-step-sublabel">Pago</span>
+            </div>
+            <div class="wizard-step-node" id="wnode-5">
+              <span>5</span>
+              <span class="wizard-step-sublabel">Voucher</span>
+            </div>
           </div>
 
           <!-- PASO 1: SELECCIÓN -->
           <div id="step-1" class="wizard-box">
-            <h2 style="margin-bottom: 8px;">Paso 1: Configura tu Reserva</h2>
-            <p style="margin-bottom: 24px;">Selecciona la fecha y el número de viajeros para tu tour en Ica.</p>
+            <h2 style="margin-bottom: 8px; font-size: 1.5rem;">Paso 1: Configura tu Salida</h2>
+            <p style="margin-bottom: 24px; color: var(--text-muted); font-size: 0.92rem;">Selecciona la fecha y la cantidad de viajeros para tu tour en Ica. El recojo en hoteles está incluido.</p>
 
-            <div class="glass-panel" style="padding: 24px; margin-bottom: 24px; background: var(--bg-subtle);">
-              <h3 id="wPkgTitle" style="color: var(--primary); margin-bottom: 6px;">Paquete Turístico</h3>
-              <p id="wPkgDesc" style="font-size: 0.92rem; margin-bottom: 12px;">Descripción del tour</p>
-              <div style="font-size: 1.3rem; font-weight: 800; color: var(--primary);" id="wPkgPrice">
-                S/. 0 por persona
-              </div>
-            </div>
-
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
               <div class="form-group">
-                <label class="form-label">Fecha del Tour</label>
+                <label class="form-label" style="font-weight: 700;">Fecha del Tour</label>
                 <input type="date" class="form-input" id="wDateInput" required>
               </div>
 
               <div class="form-group">
-                <label class="form-label">Cantidad de Viajeros</label>
-                <input type="number" class="form-input" id="wPaxInput" min="1" max="20" value="2" onchange="recalculateTotal()" required>
+                <label class="form-label" style="font-weight: 700;">Cantidad de Viajeros</label>
+                <div class="pax-counter-wrap">
+                  <button type="button" class="pax-btn" onclick="paxStep(-1)" aria-label="Restar viajero">−</button>
+                  <input type="number" class="pax-input" id="wPaxInput" min="1" max="25" value="2" onchange="recalculateTotal()">
+                  <button type="button" class="pax-btn" onclick="paxStep(1)" aria-label="Añadir viajero">+</button>
+                </div>
               </div>
             </div>
 
             <div class="form-group">
-              <label class="form-label">Notas Adicionales (Hotel de Recojo en Ica/Paracas)</label>
-              <textarea class="form-input" id="wNotesInput" rows="2" placeholder="Ej. Hotel Las Dunas, Ica."></textarea>
+              <label class="form-label" style="font-weight: 700;">Hotel o Punto de Recojo en Ica / Huacachina / Paracas</label>
+              <textarea class="form-input" id="wNotesInput" rows="2" placeholder="Ej. Hotel Las Dunas Ica, Curasi Huacachina, o Terminal Cruz del Sur"></textarea>
             </div>
 
-            <div style="display: flex; justify-content: flex-end; margin-top: 24px;">
-              <button class="btn btn-primary" onclick="goToStep(2)">
-                Continuar a Datos del Pasajero →
+            <div style="background: var(--sand-50); border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 18px 24px; margin-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;">
+              <div>
+                <span style="font-size: 0.8rem; color: var(--text-dim); display: block;">Subtotal Estimado:</span>
+                <strong style="font-size: 1.35rem; color: var(--primary);" id="wSubtotalLive">S/. 170.00</strong>
+              </div>
+              <button type="button" class="btn btn-primary btn-glow" onclick="goToStep(2)" style="padding: 12px 28px;">
+                Continuar a Datos del Titular →
               </button>
             </div>
           </div>
 
           <!-- PASO 2: DATOS DEL PASAJERO -->
           <div id="step-2" class="wizard-box" style="display: none;">
-            <h2 style="margin-bottom: 8px;">Paso 2: Datos del Titular</h2>
-            <p style="margin-bottom: 24px;">Información obligatoria para el seguro contra accidentes y manifiesto de transporte.</p>
+            <h2 style="margin-bottom: 8px; font-size: 1.5rem;">Paso 2: Datos del Titular</h2>
+            <p style="margin-bottom: 24px; color: var(--text-muted); font-size: 0.92rem;">Información requerida para el manifiesto de transporte y emisión del seguro turístico.</p>
 
             <form onsubmit="handleStep2Submit(event)">
               <div class="form-group">
-                <label class="form-label">Nombre y Apellidos</label>
+                <label class="form-label" style="font-weight: 700;">Nombre y Apellidos</label>
                 <input type="text" class="form-input" id="wTitularName" placeholder="Ej. Diego Mucha" required>
               </div>
 
               <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
                 <div class="form-group">
-                  <label class="form-label">DNI o Pasaporte</label>
+                  <label class="form-label" style="font-weight: 700;">DNI o Pasaporte</label>
                   <input type="text" class="form-input" id="wTitularDoc" placeholder="Ej. 74829103" required>
                 </div>
                 <div class="form-group">
-                  <label class="form-label">Celular / WhatsApp</label>
+                  <label class="form-label" style="font-weight: 700;">Celular / WhatsApp Oficial</label>
                   <input type="tel" class="form-input" id="wTitularPhone" placeholder="+51 987 654 321" required>
                 </div>
               </div>
 
               <div class="form-group">
-                <label class="form-label">Correo Electrónico (para el Voucher)</label>
-                <input type="email" class="form-input" id="wTitularEmail" placeholder="correo@ejemplo.com" required>
+                <label class="form-label" style="font-weight: 700;">Correo Electrónico (para recibir el Voucher)</label>
+                <input type="email" class="form-input" id="wTitularEmail" placeholder="viajero@ejemplo.com" required>
               </div>
 
-              <div style="display: flex; justify-content: space-between; margin-top: 28px;">
-                <button type="button" class="btn btn-outline-dark" onclick="goToStep(1)">← Atrás</button>
-                <button type="submit" class="btn btn-primary">Revisar Resumen →</button>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 28px;">
+                <button type="button" class="btn btn-outline-dark" onclick="goToStep(1)">← Volver a Salida</button>
+                <button type="submit" class="btn btn-primary btn-glow">Revisar Resumen →</button>
               </div>
             </form>
           </div>
 
           <!-- PASO 3: RESUMEN -->
           <div id="step-3" class="wizard-box" style="display: none;">
-            <h2 style="margin-bottom: 8px;">Paso 3: Resumen de Reserva</h2>
-            <p style="margin-bottom: 24px;">Verifica el desglose final en Soles antes de pagar.</p>
+            <h2 style="margin-bottom: 8px; font-size: 1.5rem;">Paso 3: Resumen y Confirmación</h2>
+            <p style="margin-bottom: 24px; color: var(--text-muted); font-size: 0.92rem;">Verifica el desglose final antes de proceder a la pasarela de pago seguro.</p>
 
-            <div class="glass-panel" style="padding: 28px; margin-bottom: 24px;" id="wSummaryBox">
-              <!-- JS -->
+            <div class="glass-panel" style="padding: 24px; margin-bottom: 24px; border: 1px solid var(--border-light);" id="wSummaryBox">
+              <!-- JS renders summary -->
             </div>
 
-            <div style="display: flex; justify-content: space-between; margin-top: 28px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 28px;">
               <button type="button" class="btn btn-outline-dark" onclick="goToStep(2)">← Modificar Datos</button>
-              <button type="button" class="btn btn-primary" onclick="goToStep(4)">Continuar al Pago Seguro →</button>
+              <button type="button" class="btn btn-primary btn-glow" onclick="goToStep(4)">Continuar al Pago Seguro →</button>
             </div>
           </div>
 
           <!-- PASO 4: PASARELA DE PAGO CON YAPE -->
           <div id="step-4" class="wizard-box" style="display: none;">
-            <h2 style="margin-bottom: 8px;">Paso 4: Pasarela de Pago Oficial</h2>
-            <p style="margin-bottom: 24px;">Selecciona tu método de pago preferido en Soles Peruanos (S/.).</p>
+            <h2 style="margin-bottom: 8px; font-size: 1.5rem;">Paso 4: Pasarela de Pago Oficial</h2>
+            <p style="margin-bottom: 24px; color: var(--text-muted); font-size: 0.92rem;">Selecciona tu método de pago preferido. Procesamiento seguro y confirmación inmediata.</p>
 
             <!-- Métodos -->
             <div class="payment-methods-strip">
@@ -1248,25 +1633,18 @@
 
             <!-- Box 1: YAPE INTERACTIVO -->
             <div id="payBoxYape" class="yape-box-container">
-              
               <div class="yape-qr-card">
-                <!-- SVG Simulación Código QR Yape con Logo Central -->
                 <svg width="150" height="150" viewBox="0 0 100 100" style="display: block; margin: 0 auto;">
                   <rect width="100" height="100" fill="#FFFFFF"/>
-                  <!-- QR Finder patterns -->
                   <rect x="5" y="5" width="25" height="25" fill="#732282"/>
                   <rect x="9" y="9" width="17" height="17" fill="#FFFFFF"/>
                   <rect x="13" y="13" width="9" height="9" fill="#732282"/>
-
                   <rect x="70" y="5" width="25" height="25" fill="#732282"/>
                   <rect x="74" y="9" width="17" height="17" fill="#FFFFFF"/>
                   <rect x="78" y="13" width="9" height="9" fill="#732282"/>
-
                   <rect x="5" y="70" width="25" height="25" fill="#732282"/>
                   <rect x="9" y="74" width="17" height="17" fill="#FFFFFF"/>
                   <rect x="13" y="78" width="9" height="9" fill="#732282"/>
-
-                  <!-- Data dots -->
                   <rect x="35" y="10" width="6" height="6" fill="#732282"/>
                   <rect x="45" y="15" width="8" height="8" fill="#732282"/>
                   <rect x="55" y="8" width="7" height="7" fill="#732282"/>
@@ -1275,7 +1653,6 @@
                   <rect x="35" y="35" width="30" height="30" rx="6" fill="#732282"/>
                   <circle cx="50" cy="50" r="10" fill="#00D68F"/>
                   <text x="50" y="54" font-size="10" font-weight="900" fill="#FFFFFF" text-anchor="middle">Y</text>
-
                   <rect x="70" y="40" width="8" height="8" fill="#732282"/>
                   <rect x="85" y="45" width="6" height="6" fill="#732282"/>
                   <rect x="38" y="72" width="7" height="7" fill="#732282"/>
@@ -1286,172 +1663,148 @@
               </div>
 
               <div>
-                <span class="yape-phone-chip">
-                  Yapear al: 956 789 012
-                </span>
+                <div class="badge badge-yape" style="margin-bottom: 8px;">PASARELA OFICIAL YAPE</div>
                 <p style="font-size: 0.9rem; color: var(--yape-purple); font-weight: 700; margin-bottom: 6px;">
-                  Titular: Buganvilla Tours E.I.R.L.
+                  Número de Yape Empresarial: 956 623 396
                 </p>
                 <p style="font-size: 1.15rem; font-weight: 800; color: var(--text-main); margin-bottom: 20px;">
-                  Monto a Yapear: <span style="color: var(--yape-purple);" id="wYapeAmountDisplay">S/. 0</span>
+                  Monto a Yapear: <span id="wYapeAmountDisplay" style="color: var(--primary); font-size: 1.3rem;">S/. 0.00</span>
                 </p>
-              </div>
 
-              <!-- Input Código de Aprobación -->
-              <div style="max-width: 380px; margin: 0 auto; text-align: left;">
-                <label class="form-label" style="color: var(--yape-purple);">
-                  Ingresa tu Código de Aprobación Yape (6 dígitos)
-                </label>
-                <input type="text" class="form-input" id="yapeTokenInput" placeholder="Ej. 849201" maxlength="6" style="text-align: center; font-size: 1.3rem; letter-spacing: 4px; font-weight: 800;" required>
-                <small style="color: var(--text-dim); display: block; text-align: center; margin-top: 6px;">
-                  Aparece en la pantalla final de tu aplicativo Yape tras enviar el monto.
-                </small>
-              </div>
+                <div class="form-group">
+                  <label class="form-label" style="font-weight: 700;">Código de Aprobación de 6 dígitos del Yape:</label>
+                  <input type="text" class="form-input" id="yapeTokenInput" placeholder="Ej. 849201" maxlength="6" style="text-align: center; font-size: 1.3rem; letter-spacing: 4px; font-weight: 800;" required>
+                  <small style="color: var(--text-dim); display: block; margin-top: 6px;">
+                    Ingresa el código que figura en tu confirmación de Yape.
+                  </small>
+                </div>
 
-              <div style="margin-top: 24px;">
-                <button type="button" class="btn btn-yape" style="font-size: 1.05rem; padding: 14px 34px;" onclick="processPayment('Yape')">
-                  Verificar y Confirmar Pago Yape
+                <button type="button" class="btn btn-yape btn-glow" style="font-size: 1.05rem; padding: 14px 34px;" onclick="processPayment('Yape')">
+                  Validar Pago con Yape
                 </button>
               </div>
-
             </div>
 
-            <!-- Box 2: TARJETA DE CRÉDITO -->
-            <div id="payBoxCard" style="display: none; padding: 24px; border: 1px solid var(--border-light); border-radius: var(--radius-md); margin-bottom: 24px;">
+            <!-- Box 2: TARJETA -->
+            <div id="payBoxCard" style="display: none; padding: 24px; background: var(--bg-subtle); border-radius: var(--radius-md); border: 1px solid var(--border-light);">
+              <h3 style="margin-bottom: 12px;">Pago Seguro con Tarjeta</h3>
+              <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 16px;">Aceptamos Visa, Mastercard, American Express y Diners Club con encriptación TLS 256-bit.</p>
               <div class="form-group">
                 <label class="form-label">Número de Tarjeta</label>
-                <input type="text" class="form-input" placeholder="4557 •••• •••• ••••" maxlength="19">
+                <input type="text" class="form-input" placeholder="4557 •••• •••• 9812" maxlength="19">
               </div>
               <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
                 <div class="form-group">
                   <label class="form-label">Vencimiento (MM/AA)</label>
-                  <input type="text" class="form-input" placeholder="12/28" maxlength="5">
+                  <input type="text" class="form-input" placeholder="08/28" maxlength="5">
                 </div>
                 <div class="form-group">
                   <label class="form-label">CVV</label>
                   <input type="password" class="form-input" placeholder="123" maxlength="4">
                 </div>
               </div>
-              <button type="button" class="btn btn-primary btn-block" onclick="processPayment('Tarjeta de Crédito')">
-                Pagar Total en Soles
+              <button type="button" class="btn btn-primary btn-glow btn-block" onclick="processPayment('Tarjeta')">
+                Pagar Tarifa Oficial
               </button>
             </div>
 
-            <!-- Box 3: TRANSFERENCIA BCP -->
-            <div id="payBoxBank" style="display: none; padding: 24px; border: 1px solid var(--border-light); border-radius: var(--radius-md); margin-bottom: 24px; background: var(--bg-subtle);">
-              <h4>Cuentas Bancarias Oficiales Buganvilla Tours EIRL</h4>
-              <p style="margin: 10px 0; font-size: 0.9rem;">
-                <strong>Banco de Crédito del Perú (BCP):</strong><br>
-                Cuenta Corriente Soles: <strong>215-98421039-0-28</strong> (CCI: 002-215-0098421039028-14)<br>
-                Cuenta Corriente USD: <strong>215-98421040-1-30</strong>
-              </p>
-              <button type="button" class="btn btn-primary" onclick="processPayment('Transferencia BCP')">
-                Confirmar Envío de Voucher BCP
-              </button>
-            </div>
-
-            <!-- Box 4: PLIN -->
-            <div id="payBoxPlin" style="display: none; padding: 24px; border: 1px solid var(--border-light); border-radius: var(--radius-md); margin-bottom: 24px; text-align: center; background: #F0FDF4;">
+            <!-- Box 3: PLIN -->
+            <div id="payBoxPlin" style="display: none; padding: 24px; background: var(--bg-subtle); border-radius: var(--radius-md); border: 1px solid var(--border-light);">
               <div style="font-size: 1.15rem; font-weight: 700; color: #059669; margin-bottom: 6px;">Transferencia Directa por Plin</div>
               <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 12px;">Transfiere al número corporativo registrado:</p>
               <div style="font-size: 1.3rem; font-weight: 800; color: #059669; margin-bottom: 4px;">956 623 396</div>
               <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">Titular: Buganvilla Tours E.I.R.L.</div>
-              <div style="max-width: 320px; margin: 0 auto 16px auto; text-align: left;">
-                <label class="form-label" style="color: #059669;">Número de Operación Plin</label>
+              <div class="form-group">
+                <label class="form-label">Código de Operación Plin:</label>
                 <input type="text" class="form-input" id="plinTokenInput" placeholder="Ej. 729104" style="text-align: center; font-weight: 700;">
               </div>
-              <button type="button" class="btn btn-primary" style="background: #059669;" onclick="processPayment('Plin')">
-                Verificar Pago Plin
+              <button type="button" class="btn btn-primary btn-glow" style="background: #00D68F; border-color: #00D68F; color: #000; font-weight: 800;" onclick="processPayment('Plin')">
+                Confirmar Pago Plin
               </button>
             </div>
 
-            <!-- Box 5: PAYPAL -->
-            <div id="payBoxPaypal" style="display: none; padding: 24px; border: 1px solid var(--border-light); border-radius: var(--radius-md); margin-bottom: 24px; text-align: center; background: #F0F9FF;">
+            <!-- Box 4: PAYPAL -->
+            <div id="payBoxPaypal" style="display: none; padding: 24px; background: var(--bg-subtle); border-radius: var(--radius-md); border: 1px solid var(--border-light);">
               <div style="font-size: 1.15rem; font-weight: 700; color: #0079C1; margin-bottom: 6px;">Pasarela Internacional PayPal</div>
               <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 12px;">Recomendado para turistas extranjeros con cuentas en USD o EUR.</p>
-              <div style="max-width: 360px; margin: 0 auto 16px auto; text-align: left;">
-                <label class="form-label" style="color: #0079C1;">Correo Electrónico de tu cuenta PayPal</label>
-                <input type="email" class="form-input" id="paypalEmailInput" placeholder="viajero@paypal.com" style="text-align: center;">
-              </div>
-              <button type="button" class="btn btn-primary" style="background: #0079C1;" onclick="processPayment('PayPal')">
-                Pagar con PayPal
+              <button type="button" class="btn btn-primary btn-glow btn-block" style="background: #0079C1; border-color: #0079C1;" onclick="processPayment('PayPal')">
+                Completar con PayPal
               </button>
             </div>
 
-            <!-- Spinner de Procesamiento -->
-            <div id="payProcessingBox" style="display: none; text-align: center; padding: 40px;">
-              <div style="width: 48px; height: 48px; border: 4px solid var(--primary-soft); border-top-color: var(--primary); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 16px auto;"></div>
-              <h3>Verificando Transacción en Soles...</h3>
-              <p style="color: var(--text-dim);">Conectando con la pasarela bancaria. No cierres esta ventana.</p>
+            <!-- Box 5: BCP -->
+            <div id="payBoxBank" style="display: none; padding: 24px; background: var(--bg-subtle); border-radius: var(--radius-md); border: 1px solid var(--border-light);">
+              <h3 style="margin-bottom: 10px;">Cuentas Corrientes Banco de Crédito (BCP)</h3>
+              <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 14px;">Titular: Buganvilla Tours E.I.R.L. · RUC: 20534892019</p>
+              <div style="font-size: 0.9rem; margin-bottom: 8px;"><strong>Cta Corriente Soles:</strong> 380-2394820-0-12</div>
+              <div style="font-size: 0.9rem; margin-bottom: 18px;"><strong>CCI Interbancario:</strong> 002-380-002394820012-45</div>
+              <button type="button" class="btn btn-primary btn-glow btn-block" onclick="processPayment('Transferencia BCP')">
+                Registrar Comprobante Bancario
+              </button>
             </div>
 
-            <div style="display: flex; justify-content: flex-start; margin-top: 14px;">
-              <button type="button" class="btn btn-outline-dark btn-sm" onclick="goToStep(3)">← Volver al Resumen</button>
+            <div style="margin-top: 24px;">
+              <button type="button" class="btn btn-outline-dark" onclick="goToStep(3)">← Volver al Resumen</button>
             </div>
           </div>
 
-          <!-- PASO 5: CONFIRMACIÓN Y VOUCHER -->
+          <!-- PASO 5: VOUCHER DE CONFIRMACIÓN -->
           <div id="step-5" class="wizard-box" style="display: none;">
-            
             <div style="text-align: center; margin-bottom: 28px;">
-              <div style="width: 64px; height: 64px; border-radius: 50%; background: #E8F5E9; color: #2E7D32; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 14px;">
-                <svg width="34" height="34" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>
+              <div style="width: 64px; height: 64px; border-radius: 50%; background: var(--accent-teal-soft); color: var(--accent-teal); display: inline-flex; align-items: center; justify-content: center; margin: 0 auto 16px auto;">
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>
               </div>
               <h2 style="font-size: 1.8rem; color: var(--primary-dark);">¡Pago y Reserva Confirmados!</h2>
-              <p style="color: var(--text-muted);">Tu comprobante oficial ha sido emitido con éxito.</p>
+              <p style="color: var(--text-muted);">Tu salida oficial ha sido programada exitosamente con Buganvilla Tours.</p>
             </div>
 
-            <!-- Voucher Oficial -->
-            <div class="voucher-card">
-              <div class="voucher-header">
+            <!-- Voucher Box -->
+            <div class="glass-panel" style="padding: 32px; border: 2px dashed var(--accent-gold); background: #FFFFFF; border-radius: var(--radius-md); position: relative; margin-bottom: 28px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-light); padding-bottom: 16px; margin-bottom: 20px;">
                 <div>
-                  <img src="https://buganvillatours.com/wp-content/uploads/2016/09/Logo-Buganvilla-web.png" 
-                       alt="Logo Buganvilla" 
-                       style="height: 36px; margin-bottom: 4px;"
-                       onerror="this.style.display='none';">
+                  <h3 style="color: var(--primary); font-size: 1.3rem;">Buganvilla Tours EIRL</h3>
                   <div style="font-size: 0.8rem; color: var(--text-dim); font-weight: 600;">Tour Operador Ica · DIRCETUR Nº 042</div>
                 </div>
                 <div style="text-align: right;">
-                  <span class="badge badge-teal">PAGO COMPLETADO</span>
+                  <span style="font-size: 0.78rem; color: var(--text-dim); font-weight: 700; text-transform: uppercase;">Código de Reserva</span>
                   <div style="font-size: 1.1rem; font-weight: 800; color: var(--primary); margin-top: 4px;" id="vCode">BGN-00000</div>
                 </div>
               </div>
 
-              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px;">
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; font-size: 0.9rem; margin-bottom: 20px;">
                 <div>
                   <span style="font-size: 0.8rem; color: var(--text-dim); display: block;">Titular de la Reserva:</span>
-                  <strong id="vName">Diego Mucha</strong>
+                  <strong id="vName">--</strong>
                 </div>
                 <div>
                   <span style="font-size: 0.8rem; color: var(--text-dim); display: block;">Paquete Turístico:</span>
-                  <strong id="vPackage">Aventura en Huacachina</strong>
+                  <strong id="vPackage">--</strong>
                 </div>
                 <div>
                   <span style="font-size: 0.8rem; color: var(--text-dim); display: block;">Fecha Programada:</span>
-                  <strong id="vDate">2026-10-20</strong>
+                  <strong id="vDate">--</strong>
                 </div>
                 <div>
                   <span style="font-size: 0.8rem; color: var(--text-dim); display: block;">Método de Pago:</span>
-                  <strong id="vMethod">Yape Oficial</strong>
+                  <strong id="vMethod">--</strong>
                 </div>
               </div>
 
-              <div style="background: var(--bg-subtle); padding: 18px; border-radius: var(--radius-sm); display: flex; justify-content: space-between; align-items: center;">
-                <span style="font-weight: 700;">Total Pagado en Soles:</span>
+              <div style="background: var(--bg-subtle); padding: 16px; border-radius: var(--radius-sm); display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-weight: 700;">Total Pagado:</span>
                 <span style="font-size: 1.5rem; font-weight: 800; color: var(--primary);" id="vTotal">S/. 0</span>
               </div>
             </div>
 
-            <div style="display: flex; justify-content: center; gap: 14px; margin-top: 30px;">
-              <button class="btn btn-outline-dark" onclick="downloadVoucher()">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
-                Descargar Voucher (PDF)
+            <div style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
+              <button type="button" class="btn btn-primary btn-glow" onclick="window.print()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg>
+                Imprimir / Guardar Voucher
               </button>
-              <button class="btn btn-primary" onclick="navigate('client-dashboard')">
-                Ir a Mis Reservas
+              <button type="button" class="btn btn-outline-dark" onclick="navigate('home'); scrollToSection('paquetes');">
+                Volver a Catálogo de Tours
               </button>
             </div>
-
           </div>
 
         </div>
@@ -1493,6 +1846,33 @@
       </div>
     </div>
   </div>
+
+  <!-- ==========================================================================
+       DRAWER "MI VIAJE" / WISHLIST (GABO 65% + BUGANVILLA)
+       ========================================================================== -->
+  <div class="plan-drawer-overlay" id="planOverlay" onclick="togglePlanDrawer()"></div>
+  <aside class="plan-drawer" id="planDrawer" aria-labelledby="planDrawerTitle">
+    <div class="plan-drawer-head">
+      <h2 id="planDrawerTitle">Mi Viaje <span id="planDrawerCount" style="color: var(--accent-gold); font-size: 1.1rem;">(0)</span></h2>
+      <button class="plan-drawer-close" onclick="togglePlanDrawer()" aria-label="Cerrar">&times;</button>
+    </div>
+    <div class="plan-drawer-content" id="planDrawerContent">
+      <!-- Dynamically populated by renderPlanDrawer() -->
+    </div>
+    <div class="plan-drawer-footer">
+      <div class="plan-total-row">
+        <span>Total Estimado:</span>
+        <span class="plan-total-amount" id="planTotalAmount">0.00 S/.</span>
+      </div>
+      <a id="planWhatsAppBtn" href="#" target="_blank" class="btn btn-primary btn-block" style="display: flex; justify-content: center; align-items: center; gap: 8px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"/></svg>
+        Cotizar por WhatsApp
+      </a>
+      <button class="btn btn-outline btn-block btn-sm" onclick="clearWishlist()">
+        Vaciar mi selección
+      </button>
+    </div>
+  </aside>
 
   <!-- Botón Flotante Oficial WhatsApp -->
   <a href="https://wa.me/51956623396?text=Hola%20Buganvilla%20Tours,%20deseo%20informaci%C3%B3n%20sobre%20los%20paquetes%20en%20Ica" 

@@ -69,6 +69,7 @@ function setCurrency(code, e) {
 
   // Re-render package cards and wizard pricing if open
   renderHomePackages();
+  renderPlanDrawer();
   if (bookingWizard.package) {
     recalculateTotal();
     if (document.getElementById('step-3')?.style.display !== 'none') {
@@ -493,30 +494,89 @@ async function loadLivePackages() {
   }
 }
 
-function filterHomePackages(category, btn) {
+function selectDestinationAndFilter(destKey) {
+  filterHomePackages(destKey);
+  scrollToSection('paquetes');
+}
+
+function paxStep(delta) {
+  const input = document.getElementById('wPaxInput');
+  if (!input) return;
+  let val = (parseInt(input.value, 10) || 2) + delta;
+  if (val < 1) val = 1;
+  if (val > 25) val = 25;
+  input.value = val;
+  recalculateTotal();
+}
+
+function filterHomePackages(filterKey, btn) {
   if (btn) {
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
+  } else {
+    document.querySelectorAll('.filter-btn').forEach(b => {
+      const attr = b.getAttribute('onclick') || '';
+      if (filterKey === 'all') {
+        b.classList.toggle('active', attr.includes("'all'"));
+      } else if (filterKey === 'huacachina') {
+        b.classList.toggle('active', attr.includes("'aventura'"));
+      } else if (filterKey === 'paracas') {
+        b.classList.toggle('active', attr.includes("'naturaleza'"));
+      } else if (filterKey === 'nasca' || filterKey === 'ica') {
+        b.classList.toggle('active', attr.includes("'cultura'"));
+      } else {
+        b.classList.toggle('active', attr.includes("'" + filterKey + "'"));
+      }
+    });
   }
-  renderHomePackages(category);
+  renderHomePackages(filterKey);
 }
 
-function renderHomePackages(category = 'all') {
+function renderHomePackages(filterKey = 'all') {
   const container = document.getElementById('homePackagesContainer');
   if (!container) return;
 
   const pkgs = getStoredPackages();
-  const filtered = category === 'all' ? pkgs : pkgs.filter(p => p.category === category);
+  let filtered = pkgs;
+
+  if (filterKey && filterKey !== 'all') {
+    const key = filterKey.toLowerCase();
+    filtered = pkgs.filter(p => {
+      if (p.category === key) return true;
+      const text = `${p.name} ${p.description}`.toLowerCase();
+      if (key === 'huacachina') return text.includes('huacachina');
+      if (key === 'paracas') return text.includes('paracas') || text.includes('ballestas');
+      if (key === 'nasca' || key === 'nazca') return text.includes('nasca') || text.includes('nazca');
+      if (key === 'ica') return text.includes('ica') || text.includes('pisco') || text.includes('cachiche') || text.includes('cañón') || text.includes('canon');
+      return text.includes(key);
+    });
+  }
+
+  const wishlist = getWishlist();
+
+  if (filtered.length === 0) {
+    container.innerHTML = `
+      <div style="grid-column: 1 / -1; text-align: center; padding: 48px 20px; color: var(--text-muted);">
+        <p style="font-size: 1.1rem; margin-bottom: 14px;">No encontramos paquetes para este filtro en Ica.</p>
+        <button class="btn btn-outline btn-sm" onclick="filterHomePackages('all')">Ver todos los paquetes</button>
+      </div>
+    `;
+    return;
+  }
 
   container.innerHTML = filtered.map(pkg => {
     const formattedPrice = formatMoney(pkg.price);
     const curCode = currentCurrency;
+    const isSaved = wishlist.includes(pkg.id);
 
     return `
-      <div class="pkg-card">
+      <div class="pkg-card reveal-up">
         <div class="pkg-img-wrap">
           <img src="${pkg.image}" alt="${pkg.name}" class="pkg-img" loading="lazy" referrerpolicy="no-referrer">
           <div class="pkg-badge-float">${pkg.category.toUpperCase()}</div>
+          <button class="pkg-bookmark-btn ${isSaved ? 'active' : ''}" onclick="toggleWishlist(${pkg.id}, event)" title="${isSaved ? 'Quitar de Mi Viaje' : 'Guardar en Mi Viaje'}" aria-label="Guardar en Mi Viaje">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="${isSaved ? '#E2C275' : 'none'}" stroke="${isSaved ? '#E2C275' : 'currentColor'}" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+          </button>
         </div>
         <div class="pkg-body">
           <div class="pkg-meta-row">
@@ -543,7 +603,7 @@ function renderHomePackages(category = 'all') {
                 ${formattedPrice} <span>${curCode}</span>
               </div>
             </div>
-            <button class="btn btn-primary btn-sm" onclick="startBookingFlow(${pkg.id})">
+            <button class="btn btn-primary btn-sm btn-glow" onclick="startBookingFlow(${pkg.id})">
               Reservar
               <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M5 13h11.86l-5.43 5.43 1.42 1.42L21.71 12l-8.86-7.85-1.42 1.42L16.86 11H5v2z"/></svg>
             </button>
@@ -552,6 +612,347 @@ function renderHomePackages(category = 'all') {
       </div>
     `;
   }).join('');
+
+  initScrollReveal();
+}
+
+/* ==========================================================================
+   MI VIAJE / WISHLIST SYSTEM (GABO 65% + BUGANVILLA)
+   ========================================================================== */
+function getWishlist() {
+  try {
+    const raw = localStorage.getItem('bgv_wishlist');
+    return raw ? JSON.parse(raw) : [];
+  } catch (e) {
+    return [];
+  }
+}
+
+function saveWishlist(list) {
+  try {
+    localStorage.setItem('bgv_wishlist', JSON.stringify(list));
+  } catch (e) {}
+}
+
+function updateWishlistBadge() {
+  const list = getWishlist();
+  const badges = document.querySelectorAll('#planCount, .count-badge');
+  badges.forEach(b => {
+    b.textContent = list.length;
+    b.classList.remove('bump');
+    void b.offsetWidth;
+    b.classList.add('bump');
+  });
+}
+
+function toggleWishlist(pkgId, event) {
+  if (event) {
+    event.stopPropagation();
+    event.preventDefault();
+  }
+  let list = getWishlist();
+  const idx = list.indexOf(pkgId);
+  if (idx > -1) {
+    list.splice(idx, 1);
+  } else {
+    list.push(pkgId);
+  }
+  saveWishlist(list);
+  updateWishlistBadge();
+  renderHomePackages();
+  renderPlanDrawer();
+}
+
+function togglePlanDrawer() {
+  const drawer = document.getElementById('planDrawer');
+  const overlay = document.getElementById('planOverlay');
+  if (!drawer || !overlay) return;
+  const isOpen = drawer.classList.contains('open');
+  if (isOpen) {
+    drawer.classList.remove('open');
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+  } else {
+    renderPlanDrawer();
+    drawer.classList.add('open');
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+function clearWishlist() {
+  saveWishlist([]);
+  updateWishlistBadge();
+  renderHomePackages();
+  renderPlanDrawer();
+}
+
+function renderPlanDrawer() {
+  const container = document.getElementById('planDrawerContent');
+  const totalEl = document.getElementById('planTotalAmount');
+  const countEl = document.getElementById('planDrawerCount');
+  const waBtn = document.getElementById('planWhatsAppBtn');
+  if (!container) return;
+
+  const list = getWishlist();
+  const allPkgs = getStoredPackages();
+  const savedPkgs = allPkgs.filter(p => list.includes(p.id));
+
+  if (countEl) countEl.textContent = `(${savedPkgs.length})`;
+
+  if (savedPkgs.length === 0) {
+    container.innerHTML = `
+      <div class="plan-empty">
+        <svg class="plan-empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        <h4 style="font-family: var(--font-display); font-size: 1.15rem; color: var(--text-main); margin-bottom: 6px;">Tu viaje está vacío</h4>
+        <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.45;">Haz clic en el icono de guardar en los paquetes turísticos que más te interesen para armar tu recorrido ideal por Ica.</p>
+      </div>
+    `;
+    if (totalEl) totalEl.textContent = `${formatMoney(0)} ${currentCurrency}`;
+    if (waBtn) {
+      waBtn.style.opacity = '0.5';
+      waBtn.style.pointerEvents = 'none';
+      waBtn.href = '#';
+    }
+    return;
+  }
+
+  let totalPen = 0;
+  container.innerHTML = savedPkgs.map(pkg => {
+    totalPen += pkg.price;
+    const formatted = formatMoney(pkg.price);
+    return `
+      <div class="plan-item">
+        <img src="${pkg.image}" alt="${pkg.name}" class="plan-item-img" loading="lazy">
+        <div class="plan-item-info">
+          <div class="plan-item-title">${pkg.name}</div>
+          <div class="plan-item-meta">${pkg.duration} · Salida Diaria</div>
+          <div class="plan-item-price">${formatted} <small>${currentCurrency}</small></div>
+        </div>
+        <div class="plan-item-actions">
+          <button class="btn btn-primary btn-sm" onclick="togglePlanDrawer(); startBookingFlow(${pkg.id});" style="padding: 6px 12px; font-size: 0.78rem;">
+            Reservar
+          </button>
+          <button class="plan-item-del" onclick="toggleWishlist(${pkg.id})" title="Quitar">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+            Quitar
+          </button>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  if (totalEl) totalEl.textContent = `${formatMoney(totalPen)} ${currentCurrency}`;
+
+  if (waBtn) {
+    waBtn.style.opacity = '1';
+    waBtn.style.pointerEvents = 'auto';
+    const names = savedPkgs.map(p => `• ${p.name} (${formatMoney(p.price)} ${currentCurrency})`).join('\n');
+    const msg = `¡Hola Buganvilla Tours! Deseo cotizar mi itinerario para ${savedPkgs.length} experiencia(s) en Ica:\n${names}\nTotal estimado: ${formatMoney(totalPen)} ${currentCurrency}. ¿Tienen disponibilidad de fechas?`;
+    waBtn.href = `https://wa.me/${COMPANY.whatsappRaw}?text=${encodeURIComponent(msg)}`;
+  }
+}
+
+/* ==========================================================================
+   02 · HERO BOOKING BAR / PLANIFICADOR (GABO FUSION)
+   ========================================================================== */
+function filterFromBookBar(event) {
+  if (event) event.preventDefault();
+  const destSelect = document.getElementById('bookBarDest');
+  const dateInput = document.getElementById('bookBarDate');
+  const paxSelect = document.getElementById('bookBarPax');
+
+  const destVal = destSelect ? destSelect.value : 'all';
+  const paxVal = paxSelect ? parseInt(paxSelect.value, 10) : 2;
+
+  bookingState.travelers = paxVal;
+  filterHomePackages(destVal);
+  scrollToSection('paquetes');
+}
+
+/* ==========================================================================
+   LIVE CLOCK & STAT COUNTER ANIMATION
+   ========================================================================== */
+function updateHeroClock() {
+  const clockEl = document.getElementById('heroLimaClock');
+  if (!clockEl) return;
+  try {
+    const now = new Date();
+    const options = { timeZone: 'America/Lima', hour: '2-digit', minute: '2-digit', hour12: false };
+    const timeStr = new Intl.DateTimeFormat([], options).format(now);
+    clockEl.textContent = timeStr;
+  } catch (e) {
+    const d = new Date();
+    clockEl.textContent = `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
+  }
+}
+setInterval(updateHeroClock, 1000);
+updateHeroClock();
+
+function initStatCounters() {
+  const stats = document.querySelectorAll('.stat-num[data-target]');
+  if (!stats.length || !('IntersectionObserver' in window)) return;
+
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const target = parseInt(el.getAttribute('data-target'), 10);
+        const from = parseInt(el.getAttribute('data-from') || '0', 10);
+        const suffix = el.getAttribute('data-suffix') || '';
+        const duration = 1400;
+        const startTime = performance.now();
+
+        function animate(now) {
+          const elapsed = now - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+          const ease = 1 - Math.pow(1 - progress, 3);
+          const current = Math.floor(from + (target - from) * ease);
+          el.textContent = current + suffix;
+          if (progress < 1) {
+            requestAnimationFrame(animate);
+          } else {
+            el.textContent = target + suffix;
+          }
+        }
+        requestAnimationFrame(animate);
+        obs.unobserve(el);
+      }
+    });
+  }, { threshold: 0.25 });
+
+  stats.forEach(s => observer.observe(s));
+}
+
+/* ==========================================================================
+   07 · SCROLL PROGRESS LINE (GABO +10% FUSION)
+   ========================================================================== */
+function initScrollProgress() {
+  const bar = document.querySelector('.scroll-progress-bar');
+  if (!bar) return;
+
+  function update() {
+    const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = scrollHeight > 0 ? window.scrollY / scrollHeight : 0;
+    bar.style.transform = `scaleX(${Math.min(Math.max(progress, 0), 1)})`;
+  }
+
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+}
+
+/* ==========================================================================
+   08 · LIGHTWEIGHT SCROLL REVEAL (GPU ACCELERATED - NO JANK)
+   ========================================================================== */
+function initScrollReveal() {
+  const elements = document.querySelectorAll('.reveal-up:not(.is-visible)');
+  if (!elements.length) return;
+
+  if (!('IntersectionObserver' in window)) {
+    elements.forEach(el => el.classList.add('is-visible'));
+    return;
+  }
+
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -20px 0px' });
+
+  elements.forEach(el => observer.observe(el));
+}
+
+/* ==========================================================================
+   09 · HERO TERRITORY SELECTOR (GABO +10% FUSION)
+   ========================================================================== */
+function selectHeroTerritory(destKey) {
+  document.querySelectorAll('.hero-dest-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('data-dest') === destKey);
+  });
+
+  const destSelect = document.getElementById('bookBarDest');
+  if (destSelect) {
+    destSelect.value = destKey;
+  }
+}
+
+/* ==========================================================================
+   10 · TESTIMONIAL QUOTES CAROUSEL (GABO +10% FUSION)
+   ========================================================================== */
+const TESTIMONIAL_QUOTES = [
+  {
+    quote: "El atardecer sobre las dunas de <i>Huacachina</i> y el recorrido en tubulares fue la experiencia más emocionante de nuestro viaje por el Perú. La puntualidad y calidez de Buganvilla Tours superaron todas nuestras expectativas.",
+    author: "Familia Valdivia Morales",
+    tag: "Viajeros desde Lima · Tour Huacachina & Sandboard"
+  },
+  {
+    quote: "Ver los lobos marinos y pingüinos en las <i>Islas Ballestas</i> con una embarcación impecable y chalecos certificados nos dio total tranquilidad. Sus 24 años de experiencia se notan en cada detalle del servicio.",
+    author: "Claire & Thomas Dubois",
+    tag: "Turistas de Francia · Tour Paracas & Reserva Nacional"
+  },
+  {
+    quote: "El sobrevuelo a las <i>Líneas de Nasca</i> fue sencillamente impresionante. Todo el trámite en el aeródromo fue coordinado por Buganvilla de forma ágil, profesional y transparente.",
+    author: "Carlos E. Benavides",
+    tag: "Viajero Corporativo · Sobrevuelo Nasca & Ruta del Pisco"
+  }
+];
+
+let activeQuoteIndex = 0;
+let quoteAutoTimer = null;
+
+function renderQuote(index) {
+  const quoteTextEl = document.getElementById('quoteText');
+  const quoteAuthorEl = document.getElementById('quoteAuthor');
+  const quoteTagEl = document.getElementById('quoteTag');
+  const dotsContainer = document.getElementById('quoteDots');
+  if (!quoteTextEl || !quoteAuthorEl || !quoteTagEl) return;
+
+  activeQuoteIndex = (index + TESTIMONIAL_QUOTES.length) % TESTIMONIAL_QUOTES.length;
+  const item = TESTIMONIAL_QUOTES[activeQuoteIndex];
+
+  quoteTextEl.style.opacity = '0';
+  setTimeout(() => {
+    quoteTextEl.innerHTML = `"${item.quote}"`;
+    quoteAuthorEl.textContent = item.author;
+    quoteTagEl.textContent = item.tag;
+    quoteTextEl.style.opacity = '1';
+  }, 200);
+
+  if (dotsContainer) {
+    dotsContainer.innerHTML = TESTIMONIAL_QUOTES.map((_, i) => `
+      <span class="quote-dot ${i === activeQuoteIndex ? 'active' : ''}" onclick="selectQuote(${i})"></span>
+    `).join('');
+  }
+}
+
+function nextQuote() {
+  renderQuote(activeQuoteIndex + 1);
+  resetQuoteTimer();
+}
+
+function prevQuote() {
+  renderQuote(activeQuoteIndex - 1);
+  resetQuoteTimer();
+}
+
+function selectQuote(i) {
+  renderQuote(i);
+  resetQuoteTimer();
+}
+
+function resetQuoteTimer() {
+  if (quoteAutoTimer) clearInterval(quoteAutoTimer);
+  quoteAutoTimer = setInterval(() => {
+    renderQuote(activeQuoteIndex + 1);
+  }, 7500);
+}
+
+function initQuotesCarousel() {
+  renderQuote(0);
+  resetQuoteTimer();
 }
 
 function toggleFaq(btn) {
@@ -593,7 +994,7 @@ let bookingWizard = {
 
 function startBookingFlow(pkgId) {
   const pkgs = getStoredPackages();
-  const p = pkgs.find(item => item.id === pkgId) || pkgs[0];
+  const p = pkgs.find(item => item.id === Number(pkgId)) || pkgs[0];
 
   bookingWizard.package = p;
   bookingWizard.pax = 2;
@@ -603,22 +1004,52 @@ function startBookingFlow(pkgId) {
   const dateStr = tomorrow.toISOString().split('T')[0];
   bookingWizard.date = dateStr;
 
-  document.getElementById('wPkgTitle').innerText = p.name;
-  document.getElementById('wPkgDesc').innerText = p.description;
-  document.getElementById('wPkgPrice').innerText = `${formatMoney(p.price)} por persona`;
-  document.getElementById('wDateInput').value = dateStr;
-  document.getElementById('wPaxInput').value = 2;
+  const dateInput = document.getElementById('wDateInput');
+  if (dateInput) {
+    dateInput.value = dateStr;
+    dateInput.min = new Date().toISOString().split('T')[0];
+  }
+
+  const paxInput = document.getElementById('wPaxInput');
+  if (paxInput) paxInput.value = 2;
+
+  const titleEl = document.getElementById('wPkgTitle');
+  if (titleEl) titleEl.innerText = p.name;
+
+  const descEl = document.getElementById('wPkgDesc');
+  if (descEl) descEl.innerText = p.description;
+
+  const breadcrumbEl = document.getElementById('wBreadcrumbTitle');
+  if (breadcrumbEl) breadcrumbEl.innerText = p.name;
+
+  const heroImg = document.getElementById('wPkgHeroImg');
+  if (heroImg) {
+    heroImg.src = p.image;
+    heroImg.onerror = function() {
+      this.src = 'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4c/Oasis_de_Huacachina%2C_Ica%2C_Per%C3%BA%2C_2015-07-29%2C_DD_23.JPG/960px-Oasis_de_Huacachina%2C_Ica%2C_Per%C3%BA%2C_2015-07-29%2C_DD_23.JPG';
+    };
+  }
+
+  const badgeEl = document.getElementById('wPkgBadge');
+  if (badgeEl) badgeEl.innerText = (p.category || 'TOUR').toUpperCase();
+
+  const durationEl = document.getElementById('wPkgDuration');
+  if (durationEl) durationEl.innerText = p.duration || 'Medio Día';
 
   const user = getCurrentUser();
   if (user) {
-    document.getElementById('wTitularName').value = user.name || '';
-    document.getElementById('wTitularEmail').value = user.email || '';
-    document.getElementById('wTitularPhone').value = user.phone || '';
+    const nameInput = document.getElementById('wTitularName');
+    const emailInput = document.getElementById('wTitularEmail');
+    const phoneInput = document.getElementById('wTitularPhone');
+    if (nameInput) nameInput.value = user.name || '';
+    if (emailInput) emailInput.value = user.email || '';
+    if (phoneInput) phoneInput.value = user.phone || '';
   }
 
   recalculateTotal();
   goToStep(1);
   navigate('booking');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function recalculateTotal() {
@@ -628,6 +1059,13 @@ function recalculateTotal() {
   bookingWizard.totalPen = bookingWizard.package.price * pax;
 
   const formattedTotal = formatMoney(bookingWizard.totalPen);
+  const formattedUnit = formatMoney(bookingWizard.package.price);
+
+  const subtotalLive = document.getElementById('wSubtotalLive');
+  if (subtotalLive) {
+    subtotalLive.innerText = `${pax} ${pax === 1 ? 'persona' : 'personas'} · ${formattedTotal}`;
+  }
+
   const yapeDisplay = document.getElementById('wYapeAmountDisplay');
   if (yapeDisplay) {
     if (currentCurrency === 'PEN') {
@@ -639,11 +1077,22 @@ function recalculateTotal() {
 
   const pkgPriceDisplay = document.getElementById('wPkgPrice');
   if (pkgPriceDisplay) {
-    pkgPriceDisplay.innerText = `${formatMoney(bookingWizard.package.price)} por persona`;
+    pkgPriceDisplay.innerText = `${formattedUnit} por persona`;
   }
 }
 
 function goToStep(stepNum) {
+  if (stepNum === 2) {
+    const dateInput = document.getElementById('wDateInput');
+    if (dateInput && !dateInput.value) {
+      alert('Por favor selecciona la fecha programada para tu salida.');
+      dateInput.focus();
+      return;
+    }
+    bookingWizard.date = dateInput.value;
+    bookingWizard.notes = document.getElementById('wNotesInput')?.value.trim() || '';
+  }
+
   for (let i = 1; i <= 5; i++) {
     const box = document.getElementById(`step-${i}`);
     const node = document.getElementById(`wnode-${i}`);
@@ -657,7 +1106,10 @@ function goToStep(stepNum) {
   if (stepNum === 3) {
     renderSummaryStep();
   }
-  window.scrollTo({ top: 120, behavior: 'smooth' });
+  const container = document.querySelector('.wizard-container');
+  if (container) {
+    container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
 }
 
 function handleStep2Submit(e) {
@@ -666,8 +1118,7 @@ function handleStep2Submit(e) {
   bookingWizard.titular.doc = document.getElementById('wTitularDoc').value.trim();
   bookingWizard.titular.phone = document.getElementById('wTitularPhone').value.trim();
   bookingWizard.titular.email = document.getElementById('wTitularEmail').value.trim();
-  bookingWizard.notes = document.getElementById('wNotesInput').value.trim();
-  bookingWizard.date = document.getElementById('wDateInput').value;
+  bookingWizard.notes = document.getElementById('wNotesInput')?.value.trim() || '';
 
   goToStep(3);
 }
@@ -677,30 +1128,39 @@ function renderSummaryStep() {
   const p = bookingWizard.package;
   const t = bookingWizard.titular;
   const box = document.getElementById('wSummaryBox');
-  if (!box) return;
+  if (!box || !p) return;
 
   const formattedUnit = formatMoney(p.price);
   const formattedTotal = formatMoney(bookingWizard.totalPen);
 
   box.innerHTML = `
-    <h4 style="font-size: 1.25rem; color: var(--primary); margin-bottom: 6px;">${p.name}</h4>
-    <p style="font-size: 0.88rem; color: var(--text-dim); margin-bottom: 20px;">Duración: ${p.duration} · Operado por Buganvilla Tours EIRL</p>
+    <div style="display: flex; gap: 16px; align-items: center; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--border-light);">
+      <img src="${p.image}" alt="${p.name}" style="width: 72px; height: 54px; object-fit: cover; border-radius: var(--radius-sm);" onerror="this.src='https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4c/Oasis_de_Huacachina%2C_Ica%2C_Per%C3%BA%2C_2015-07-29%2C_DD_23.JPG/960px-Oasis_de_Huacachina%2C_Ica%2C_Per%C3%BA%2C_2015-07-29%2C_DD_23.JPG'">
+      <div>
+        <h4 style="font-size: 1.15rem; color: var(--primary); margin-bottom: 2px;">${p.name}</h4>
+        <p style="font-size: 0.85rem; color: var(--text-dim); margin: 0;">Duración: ${p.duration} · Operado por Buganvilla Tours EIRL</p>
+      </div>
+    </div>
 
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px;">
       <div><span style="font-size: 0.82rem; color: var(--text-dim);">Fecha Seleccionada:</span><br><strong>${bookingWizard.date}</strong></div>
-      <div><span style="font-size: 0.82rem; color: var(--text-dim);">Cantidad de Viajeros:</span><br><strong>${bookingWizard.pax} Personas</strong></div>
+      <div><span style="font-size: 0.82rem; color: var(--text-dim);">Cantidad de Viajeros:</span><br><strong>${bookingWizard.pax} ${bookingWizard.pax === 1 ? 'Persona' : 'Personas'}</strong></div>
       <div><span style="font-size: 0.82rem; color: var(--text-dim);">Titular de Reserva:</span><br><strong>${t.name} (Doc: ${t.doc})</strong></div>
       <div><span style="font-size: 0.82rem; color: var(--text-dim);">WhatsApp / Email:</span><br><strong>${t.phone}</strong></div>
     </div>
 
-    <div style="background: var(--bg-subtle); padding: 18px; border-radius: var(--radius-sm); border: 1px solid var(--border-light);">
+    <div style="background: var(--sand-50); padding: 18px; border-radius: var(--radius-sm); border: 1px solid var(--border-light);">
       <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-        <span>Tarifa (${bookingWizard.pax} x ${formattedUnit}):</span>
+        <span>Tarifa oficial (${bookingWizard.pax} x ${formattedUnit}):</span>
         <strong>${formattedTotal}</strong>
       </div>
-      <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.9rem;">
+      <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.88rem;">
         <span>Impuestos y tasas turísticas DIRCETUR:</span>
         <span style="color: var(--accent-teal); font-weight: 600;">Incluidos</span>
+      </div>
+      <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.88rem;">
+        <span>Seguro de accidentes SOAT turístico:</span>
+        <span style="color: var(--accent-teal); font-weight: 600;">100% Cobertura</span>
       </div>
       <hr style="border: 0; border-top: 1px solid var(--border-light); margin: 10px 0;">
       <div style="display: flex; justify-content: space-between; font-size: 1.35rem; font-weight: 800; color: var(--primary);">
@@ -722,19 +1182,24 @@ function selectPayMethod(method) {
 
   if (method === 'yape') {
     document.getElementById('tabPayYape')?.classList.add('active');
-    document.getElementById('payBoxYape').style.display = 'block';
+    const b = document.getElementById('payBoxYape');
+    if (b) b.style.display = 'grid';
   } else if (method === 'card') {
     document.getElementById('tabPayCard')?.classList.add('active');
-    document.getElementById('payBoxCard').style.display = 'block';
+    const b = document.getElementById('payBoxCard');
+    if (b) b.style.display = 'block';
   } else if (method === 'bank') {
     document.getElementById('tabPayBank')?.classList.add('active');
-    document.getElementById('payBoxBank').style.display = 'block';
+    const b = document.getElementById('payBoxBank');
+    if (b) b.style.display = 'block';
   } else if (method === 'plin') {
     document.getElementById('tabPayPlin')?.classList.add('active');
-    document.getElementById('payBoxPlin').style.display = 'block';
+    const b = document.getElementById('payBoxPlin');
+    if (b) b.style.display = 'block';
   } else if (method === 'paypal') {
     document.getElementById('tabPayPaypal')?.classList.add('active');
-    document.getElementById('payBoxPaypal').style.display = 'block';
+    const b = document.getElementById('payBoxPaypal');
+    if (b) b.style.display = 'block';
   }
 }
 
@@ -757,13 +1222,13 @@ async function processPayment(methodTitle) {
     const el = document.getElementById(id);
     if (el) el.style.display = 'none';
   });
-  document.getElementById('payProcessingBox').style.display = 'block';
+  const procBox = document.getElementById('payProcessingBox');
+  if (procBox) procBox.style.display = 'block';
 
   let bookingRef = 'BGN-' + Math.floor(10000 + Math.random() * 90000);
   let finalTotalFormatted = formatMoney(bookingWizard.totalPen);
 
   try {
-    // 1. Submit Booking to Backend
     const bookingPayload = {
       package_id: bookingWizard.package.id,
       booking_date: bookingWizard.date,
@@ -793,7 +1258,6 @@ async function processPayment(methodTitle) {
       bookingRef = bObj.reference_code || bookingRef;
       if (bObj.total_formatted) finalTotalFormatted = bObj.total_formatted;
 
-      // 2. Submit Payment
       await fetch(`${API_BASE}/payments/process`, {
         method: 'POST',
         headers: headers,
@@ -810,9 +1274,8 @@ async function processPayment(methodTitle) {
   }
 
   setTimeout(() => {
-    document.getElementById('payProcessingBox').style.display = 'none';
+    if (procBox) procBox.style.display = 'none';
 
-    // Populate Voucher in Step 5
     document.getElementById('vCode').innerText = bookingRef;
     document.getElementById('vName').innerText = bookingWizard.titular.name;
     document.getElementById('vPackage').innerText = bookingWizard.package.name;
@@ -821,7 +1284,7 @@ async function processPayment(methodTitle) {
     document.getElementById('vTotal').innerText = finalTotalFormatted;
 
     goToStep(5);
-  }, 1000);
+  }, 900);
 }
 
 function downloadVoucher() {
@@ -902,6 +1365,13 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (labelEl) labelEl.textContent = cur.name;
 
   updateNavAuthUI();
+  updateWishlistBadge();
+  updateHeroClock();
+  initStatCounters();
+  initScrollProgress();
+  initScrollReveal();
+  initQuotesCarousel();
+
   await loadLivePackages();
 
   const hash = window.location.hash.replace('#', '') || 'home';
